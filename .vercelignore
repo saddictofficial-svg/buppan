@@ -1,7 +1,5 @@
-# OS
+.git
 .DS_Store
-
-# 大きな素材（サイト本体では未使用のため除外）
 *.zip
 BUPPAN_core8_jpg_set/
 BUPPAN_remaining8_export_set/
@@ -11,7 +9,5 @@ BUPPAN_remaining8_export_set/
 BUPPAN事業部組織図.png
 営業獲得～制作納品フロー.png
 案件担当一覧.png
-
-# ビルドの中間物
 pressstart.woff2
-.vercel
+artifact.html
