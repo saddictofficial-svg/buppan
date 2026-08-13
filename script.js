@@ -78,7 +78,8 @@
     W = Math.max(160, Math.ceil(rect.width / SCALE));
     H = Math.max(120, Math.ceil(rect.height / SCALE));
     canvas.width = W; canvas.height = H;
-    horizon = Math.floor(H * 0.78);
+    var mobile = window.innerWidth <= 768;
+    horizon = Math.floor(H * (mobile ? 0.9 : 0.78));
 
     /* 星 */
     stars = [];
@@ -89,7 +90,8 @@
     /* スカイライン（みなとみらいをモチーフにした稜線） */
     buildings = [];
     var baseY = horizon;
-    function b(xf, wf, hf, type) { buildings.push({ x: Math.floor(W * xf), w: Math.max(4, Math.floor(W * wf)), h: Math.floor(H * hf), type: type }); }
+    var hMul = mobile ? 0.92 : 1;
+    function b(xf, wf, hf, type) { buildings.push({ x: Math.floor(W * xf), w: Math.max(4, Math.floor(W * wf)), h: Math.floor(H * hf * hMul), type: type }); }
     b(0.02, 0.05, 0.16, "flat");
     b(0.08, 0.045, 0.24, "flat");
     b(0.13, 0.05, 0.20, "flat");
@@ -120,9 +122,15 @@
     });
 
     /* コスモクロック21（観覧車） */
-    wheel.cx = Math.floor(W * 0.79);
-    wheel.cy = Math.floor(horizon - H * 0.15);
-    wheel.r = Math.floor(H * 0.155);
+    if (mobile) {
+      wheel.cx = Math.floor(W * 0.5);
+      wheel.r = Math.floor(Math.min(H * 0.26, W * 0.36));
+      wheel.cy = Math.floor(horizon - wheel.r - H * 0.03);
+    } else {
+      wheel.cx = Math.floor(W * 0.79);
+      wheel.cy = Math.floor(horizon - H * 0.15);
+      wheel.r = Math.floor(H * 0.155);
+    }
   }
 
   var wheel = { cx: 0, cy: 0, r: 0 };
@@ -152,7 +160,7 @@
   }
 
   function drawMoon() {
-    var mx = Math.floor(W * 0.14), my = Math.floor(H * 0.16), mr = Math.max(3, Math.floor(H * 0.04));
+    var mx = Math.floor(W * 0.14), my = Math.floor(H * 0.16), mr = Math.max(3, Math.floor(Math.min(H * 0.04, W * 0.06)));
     for (var y = -mr; y <= mr; y++) for (var x = -mr; x <= mr; x++) {
       if (x * x + y * y <= mr * mr) px(mx + x, my + y, "#eaf0ff", 0.9);
     }
@@ -292,8 +300,18 @@
   else { raf = requestAnimationFrame(loop); }
 
   var rz;
-  window.addEventListener("resize", function () {
-    clearTimeout(rz);
-    rz = setTimeout(function () { setup(); if (reduce) draw(1200); }, 200);
-  });
+  function rebuild() { clearTimeout(rz); rz = setTimeout(function () { setup(); if (reduce) draw(1200); }, 150); }
+  window.addEventListener("resize", rebuild);
+  window.addEventListener("load", rebuild);
+  // canvasの実サイズが変わったら再計測（初期レイアウト確定・フォント読込・回転に強い）
+  if (window.ResizeObserver) {
+    var lastW = 0, lastH = 0;
+    var ro = new ResizeObserver(function (entries) {
+      var r = entries[0].contentRect;
+      if (Math.abs(r.width - lastW) > 2 || Math.abs(r.height - lastH) > 2) {
+        lastW = r.width; lastH = r.height; rebuild();
+      }
+    });
+    ro.observe(canvas);
+  }
 })();
