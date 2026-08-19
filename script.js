@@ -74,9 +74,28 @@
   if (form) {
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
-      document.getElementById("formNote").textContent = "送信ありがとうございます（デモ表示）";
+      var note = document.getElementById("formNote");
+      var consent = document.getElementById("consent");
+      if (consent && !consent.checked) {
+        note.style.color = "var(--pink)";
+        note.textContent = "プライバシーポリシーへの同意が必要です。";
+        return;
+      }
+      note.style.color = "";
+      note.textContent = "送信ありがとうございます（デモ表示）";
       form.reset();
     });
+  }
+
+  /* ---------- フローティングCTA：ヒーローを過ぎたら表示、CONTACTでは隠す ---------- */
+  var fab = document.getElementById("fab");
+  if (fab && "IntersectionObserver" in window) {
+    var hero = document.querySelector(".hero");
+    var contactSec = document.getElementById("contact");
+    var pastHero = false, atContact = false;
+    function updFab() { fab.classList.toggle("is-show", pastHero && !atContact); }
+    if (hero) new IntersectionObserver(function (e) { pastHero = !e[0].isIntersecting; updFab(); }, { threshold: 0 }).observe(hero);
+    if (contactSec) new IntersectionObserver(function (e) { atContact = e[0].isIntersecting; updFab(); }, { threshold: 0.05 }).observe(contactSec);
   }
 
   /* =====================================================

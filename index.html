@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BUPPAN｜面白い事業を、もっと大きく。</title>
     <meta name="description" content="広告でも、Webでも、AIでもない。私たちは、事業そのものの成長を設計する。事業成長パートナー BUPPAN。" />
+    <meta name="theme-color" content="#070b16" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23070b16'/%3E%3Cg fill='none' stroke='%2322d3ee' stroke-width='2.4'%3E%3Cpath d='M9 8h9a5 5 0 0 1 0 8H9zM9 16h10a5 5 0 0 1 0 8H9z'/%3E%3C/g%3E%3C/svg%3E" />
+    <!-- OGP / SNSシェア -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BUPPAN｜面白い事業を、もっと大きく。" />
+    <meta property="og:description" content="広告でも、Webでも、AIでもない。私たちは、事業そのものの成長を設計する。" />
+    <meta property="og:url" content="https://buppan-lemon.vercel.app/" />
+    <meta property="og:image" content="https://buppan-lemon.vercel.app/ogp.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="fonts.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -24,6 +33,7 @@
         <symbol id="ic-layers" viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16l8 4 8-4"/></symbol>
         <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.6 6.4L20 11l-6.4 1.6L12 19l-1.6-6.4L4 11l6.4-1.6z"/></symbol>
         <symbol id="ic-check" viewBox="0 0 24 24"><polyline points="5,13 10,18 19,6"/></symbol>
+        <symbol id="ic-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17.2" r="0.6" fill="currentColor" stroke="none"/></symbol>
       </defs>
     </svg>
 
@@ -94,6 +104,23 @@
           <span>事業開発</span><b>◆</b><span>戦略設計</span><b>◆</b><span>グロース</span><b>◆</b><span>マーケティング</span><b>◆</b><span>ブランディング</span><b>◆</b><span>実行支援</span><b>◆</b>
         </div>
       </div>
+
+      <!-- ======================= 課題提起（共感フック・番号なし） ======================= -->
+      <section class="section section--band section--grid" data-accent="pink">
+        <div class="container">
+          <div class="sec-head sec-head--center reveal">
+            <p class="eyebrow">PROBLEM</p>
+            <h2 class="sec-title">こんな課題、ありませんか？</h2>
+          </div>
+          <div class="pain-grid">
+            <div class="pain reveal"><svg class="ic" aria-hidden="true"><use href="#ic-alert"/></svg><p>広告もWebも回しているのに、<b>事業の売上に繋がらない</b></p></div>
+            <div class="pain reveal"><svg class="ic" aria-hidden="true"><use href="#ic-alert"/></svg><p>新規事業を始めたいが、<b>何から手をつけるべきか</b>分からない</p></div>
+            <div class="pain reveal"><svg class="ic" aria-hidden="true"><use href="#ic-alert"/></svg><p>施策が場当たり的で、<b>成果に再現性がない</b></p></div>
+            <div class="pain reveal"><svg class="ic" aria-hidden="true"><use href="#ic-alert"/></svg><p>戦略は描けても、<b>現場で実行しきれない</b></p></div>
+          </div>
+          <p class="pain-bridge reveal">ひとつでも当てはまるなら——<br class="sp" />BUPPANが<strong>事業そのものから設計</strong>し、数字に変えます。</p>
+        </div>
+      </section>
 
       <!-- ======================= 01 WHO WE ARE（左寄せ・ターミナル風） ======================= -->
       <section class="section" id="who" data-accent="cyan">
@@ -180,6 +207,20 @@
               <div class="work__thumb"><span class="work__cat">APPAREL / BRAND</span><div class="work__metric">230<small>%</small><span>ブランド再構築で売上成長</span></div></div>
               <div class="work__body"><h3>地域アパレルのブランド再定義</h3><p>らしさの言語化からEC刷新まで一貫支援。ファンが増え、売上は2.3倍に。</p></div>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================= 中間CTA（実績直後の一押し・番号なし） ======================= -->
+      <section class="ctaband" data-accent="lime">
+        <div class="container ctaband__inner">
+          <div class="ctaband__copy reveal">
+            <h3>次は、あなたの事業の番。</h3>
+            <p>初回のご相談・お見積もりは無料です。まずは話すだけでもOK。</p>
+          </div>
+          <div class="ctaband__btns reveal">
+            <a href="#contact" class="btn btn--primary btn--lg">無料で相談する <span>▶</span></a>
+            <a href="#what" class="btn btn--outline btn--lg">支援領域を見る</a>
           </div>
         </div>
       </section>
@@ -307,12 +348,26 @@
               <p class="contact__sub">事業の「面白い」を、一緒に大きくしましょう。</p>
             </div>
             <form class="contact__form" id="contactForm">
+              <div class="contact__reassure">
+                <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>相談は無料</span>
+                <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>売り込みはしません</span>
+                <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>1営業日以内に返信</span>
+              </div>
               <input type="text" placeholder="会社名" />
               <input type="text" placeholder="ご担当者名" />
               <input type="email" placeholder="メールアドレス" />
               <input type="tel" placeholder="電話番号（任意）" />
+              <select aria-label="ご相談の種別">
+                <option value="">ご相談の種別を選択</option>
+                <option>無料相談・お問い合わせ</option>
+                <option>サービス資料がほしい</option>
+                <option>パートナー・協業のご相談</option>
+                <option>採用について</option>
+                <option>その他</option>
+              </select>
               <textarea rows="4" placeholder="ご相談内容"></textarea>
-              <button type="submit" class="btn btn--primary btn--wide btn--lg">送信する <span>▶</span></button>
+              <label class="consent"><input type="checkbox" id="consent" /><span><a href="#privacy">プライバシーポリシー</a>に同意のうえ送信します</span></label>
+              <button type="submit" class="btn btn--primary btn--wide btn--lg">無料で相談する <span>▶</span></button>
               <p class="contact__note" id="formNote"></p>
             </form>
           </div>
@@ -320,10 +375,36 @@
       </section>
     </main>
 
+    <!-- フローティングCTA（スクロールで出現） -->
+    <div class="fab" id="fab">
+      <a href="#contact" class="btn btn--primary btn--lg">無料で相談する <span>▶</span></a>
+    </div>
+
     <footer class="footer">
-      <div class="container footer__inner">
-        <span class="logo__text">BUPPAN</span>
-        <span>© BUPPAN Inc. — 面白い事業を、もっと大きく。</span>
+      <div class="container">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a href="#top" class="logo" aria-label="BUPPAN"><svg class="logo__mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 8 h9 a5 5 0 0 1 0 8 h-9 z M9 16 h10 a5 5 0 0 1 0 8 h-10 z" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="logo__text">BUPPAN</span></a>
+            <p>面白い事業を、もっと大きく。<br />事業の成長そのものを設計する、成長デザインパートナー。</p>
+          </div>
+          <div>
+            <dl class="company">
+              <div class="company__row"><dt>会社名</dt><dd>BUPPAN Inc.（仮）</dd></div>
+              <div class="company__row"><dt>事業内容</dt><dd>事業戦略・事業開発・グロース・ブランディング支援</dd></div>
+              <div class="company__row"><dt>所在地</dt><dd>—（貴社情報に差し替え）</dd></div>
+              <div class="company__row"><dt>設立</dt><dd>—</dd></div>
+              <div class="company__row"><dt>お問い合わせ</dt><dd><a href="#contact" style="color:var(--cyan)">お問い合わせフォーム</a></dd></div>
+            </dl>
+            <details class="policy" id="privacy">
+              <summary>プライバシーポリシー</summary>
+              <p>当社は、お問い合わせで取得した個人情報（会社名・氏名・連絡先・相談内容等）を、ご相談への対応・ご連絡の目的にのみ利用し、適切に管理します。ご本人の同意なく第三者へ提供することはありません。開示・訂正・削除のご希望はお問い合わせフォームよりご連絡ください。※本文は雛形です。実運用に合わせて内容を確定してください。</p>
+            </details>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <span>© BUPPAN Inc. — 面白い事業を、もっと大きく。</span>
+          <span>PIXEL-NEON EDITION</span>
+        </div>
       </div>
     </footer>
 
