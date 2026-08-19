@@ -13,6 +13,26 @@
     nav.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("is-open"); }); });
   }
 
+  /* ---------- マーキー：画面幅より短いと右に空白が出るので、足りなければ自動で複製 ---------- */
+  (function () {
+    var marquee = document.querySelector(".marquee");
+    var track = document.querySelector(".marquee__track");
+    if (!marquee || !track) return;
+    var base = track.innerHTML; // 現在の内容を1単位として倍化し、-50%ループの継ぎ目を保つ
+    function ensure() {
+      var guard = 0;
+      // 「全体の半分（＝ループ1周の移動量）」が表示幅を超えるまで内容を倍化
+      while (track.scrollWidth / 2 < marquee.clientWidth + 40 && guard < 7) {
+        track.innerHTML += base;
+        guard++;
+      }
+    }
+    ensure();
+    // レイアウト確定・幅変化で確実に再計算（ResizeObserverが最も堅牢）
+    if (window.ResizeObserver) { new ResizeObserver(ensure).observe(marquee); }
+    window.addEventListener("load", ensure);
+  })();
+
   /* ---------- スクロールで出現 ---------- */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
