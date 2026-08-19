@@ -446,6 +446,15 @@ a { color: inherit; text-decoration: none; }
 /* ピクセルアバター */
 .voice__avatar .pixav { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
 
+/* アクセシビリティ：スクリーンリーダー用の隠しラベル */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+/* キーボード操作時のフォーカス可視化 */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 2px;
+}
+/* 実績・声のイメージ注記 */
+.sample-note { display: block; font-size: 11px; color: var(--muted); opacity: .85; margin-top: 6px; }
+
 /* =====================================================
    LP強化（課題提起・CTA・フォーム・会社概要）
    ===================================================== */
@@ -678,6 +687,7 @@ a { color: inherit; text-decoration: none; }
           <div class="sec-head sec-head--center reveal">
             <p class="eyebrow">03 / RESULTS</p>
             <h2 class="sec-title">数字で見る実績</h2>
+            <p class="sec-desc"><span class="sample-note">※ 数値は現在イメージです（実データに差し替え予定）</span></p>
           </div>
           <div class="scoreboard reveal">
             <div class="scoreboard__cell"><span class="stat__num" data-count="120" data-suffix="+">0</span><span class="stat__label">支援事業数</span></div>
@@ -695,7 +705,7 @@ a { color: inherit; text-decoration: none; }
           <div class="sec-head sec-head--center reveal">
             <p class="eyebrow">04 / WORKS</p>
             <h2 class="sec-title">支援実績</h2>
-            <p class="sec-desc">業種も規模もさまざま。事業の「面白い」を数字に変えた実例です。（一部・匿名）</p>
+            <p class="sec-desc">業種も規模もさまざま。事業の「面白い」を数字に変えた実例です。<span class="sample-note">※ 掲載の実績は現在イメージです（実データに差し替え予定）</span></p>
           </div>
           <div class="grid grid-3">
             <article class="work reveal" data-accent="cyan">
@@ -770,6 +780,7 @@ a { color: inherit; text-decoration: none; }
           <div class="sec-head sec-head--center reveal">
             <p class="eyebrow">06 / VOICE</p>
             <h2 class="sec-title">お客様の声</h2>
+            <p class="sec-desc"><span class="sample-note">※ 掲載のコメントは現在イメージです（実データに差し替え予定）</span></p>
           </div>
           <div class="grid grid-3">
             <article class="voice reveal" data-accent="cyan">
@@ -850,17 +861,23 @@ a { color: inherit; text-decoration: none; }
               <h2 class="sec-title">まずはお気軽にご相談ください</h2>
               <p class="contact__sub">事業の「面白い」を、一緒に大きくしましょう。</p>
             </div>
-            <form class="contact__form" id="contactForm">
+            <!-- 本番化：action に送信先(例: Formspree の https://formspree.io/f/xxxxxx）を設定すると、そのまま送信できます -->
+            <form class="contact__form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
               <div class="contact__reassure">
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>相談は無料</span>
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>売り込みはしません</span>
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>1営業日以内に返信</span>
               </div>
-              <input type="text" placeholder="会社名" />
-              <input type="text" placeholder="ご担当者名" />
-              <input type="email" placeholder="メールアドレス" />
-              <input type="tel" placeholder="電話番号（任意）" />
-              <select aria-label="ご相談の種別">
+              <label class="sr-only" for="f-company">会社名</label>
+              <input id="f-company" name="会社名" type="text" placeholder="会社名" aria-label="会社名" />
+              <label class="sr-only" for="f-name">ご担当者名</label>
+              <input id="f-name" name="ご担当者名" type="text" placeholder="ご担当者名" aria-label="ご担当者名" required />
+              <label class="sr-only" for="f-email">メールアドレス</label>
+              <input id="f-email" name="メールアドレス" type="email" placeholder="メールアドレス" aria-label="メールアドレス" required />
+              <label class="sr-only" for="f-tel">電話番号（任意）</label>
+              <input id="f-tel" name="電話番号" type="tel" placeholder="電話番号（任意）" aria-label="電話番号（任意）" />
+              <label class="sr-only" for="f-type">ご相談の種別</label>
+              <select id="f-type" name="ご相談の種別" aria-label="ご相談の種別">
                 <option value="">ご相談の種別を選択</option>
                 <option>無料相談・お問い合わせ</option>
                 <option>サービス資料がほしい</option>
@@ -868,7 +885,8 @@ a { color: inherit; text-decoration: none; }
                 <option>採用について</option>
                 <option>その他</option>
               </select>
-              <textarea rows="4" placeholder="ご相談内容"></textarea>
+              <label class="sr-only" for="f-message">ご相談内容</label>
+              <textarea id="f-message" name="ご相談内容" rows="4" placeholder="ご相談内容" aria-label="ご相談内容" required></textarea>
               <label class="consent"><input type="checkbox" id="consent" /><span><a href="#privacy">プライバシーポリシー</a>に同意のうえ送信します</span></label>
               <button type="submit" class="btn btn--primary btn--wide btn--lg">無料で相談する <span>▶</span></button>
               <p class="contact__note" id="formNote"></p>
@@ -987,17 +1005,26 @@ a { color: inherit; text-decoration: none; }
   var form = document.getElementById("contactForm");
   if (form) {
     form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
       var note = document.getElementById("formNote");
       var consent = document.getElementById("consent");
       if (consent && !consent.checked) {
+        ev.preventDefault();
         note.style.color = "var(--pink)";
         note.textContent = "プライバシーポリシーへの同意が必要です。";
         return;
       }
+      var action = form.getAttribute("action") || "";
+      if (action.indexOf("YOUR_FORM_ID") >= 0 || action === "") {
+        // 送信先が未設定 → デモ表示（本番は action に送信先を設定すると実送信されます）
+        ev.preventDefault();
+        note.style.color = "";
+        note.textContent = "送信ありがとうございます（デモ表示：公開前に送信先の設定が必要です）";
+        form.reset();
+        return;
+      }
+      // 送信先が設定済み → 同意済みなのでそのまま送信
       note.style.color = "";
-      note.textContent = "送信ありがとうございます（デモ表示）";
-      form.reset();
+      note.textContent = "送信中…";
     });
   }
 

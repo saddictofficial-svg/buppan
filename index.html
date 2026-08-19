@@ -14,6 +14,30 @@
     <meta property="og:url" content="https://buppan-lemon.vercel.app/" />
     <meta property="og:image" content="https://buppan-lemon.vercel.app/ogp.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- 構造化データ（SEO：会社/所在地） -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "株式会社Caddie",
+      "alternateName": "BUPPAN",
+      "url": "https://buppan-lemon.vercel.app/",
+      "foundingDate": "2018-07",
+      "description": "事業成長パートナー BUPPAN（株式会社Caddie）。戦略から実行まで、事業そのものの成長を設計する。",
+      "address": {
+        "@type": "PostalAddress",
+        "postalCode": "231-0032",
+        "addressRegion": "神奈川県",
+        "addressLocality": "横浜市中区",
+        "streetAddress": "不老町2丁目11-8 税経研修センター3F",
+        "addressCountry": "JP"
+      }
+    }
+    </script>
+    <!-- Google Analytics 4：測定ID(G-XXXXXXXXXX)を取得したら、この2行のコメントを外してIDを差し替えてください
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+    -->
     <link rel="stylesheet" href="fonts.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -175,6 +199,7 @@
           <div class="sec-head sec-head--center reveal">
             <p class="eyebrow">03 / RESULTS</p>
             <h2 class="sec-title">数字で見る実績</h2>
+            <p class="sec-desc"><span class="sample-note">※ 数値は現在イメージです（実データに差し替え予定）</span></p>
           </div>
           <div class="scoreboard reveal">
             <div class="scoreboard__cell"><span class="stat__num" data-count="120" data-suffix="+">0</span><span class="stat__label">支援事業数</span></div>
@@ -192,7 +217,7 @@
           <div class="sec-head sec-head--center reveal">
             <p class="eyebrow">04 / WORKS</p>
             <h2 class="sec-title">支援実績</h2>
-            <p class="sec-desc">業種も規模もさまざま。事業の「面白い」を数字に変えた実例です。（一部・匿名）</p>
+            <p class="sec-desc">業種も規模もさまざま。事業の「面白い」を数字に変えた実例です。<span class="sample-note">※ 掲載の実績は現在イメージです（実データに差し替え予定）</span></p>
           </div>
           <div class="grid grid-3">
             <article class="work reveal" data-accent="cyan">
@@ -267,6 +292,7 @@
           <div class="sec-head sec-head--center reveal">
             <p class="eyebrow">06 / VOICE</p>
             <h2 class="sec-title">お客様の声</h2>
+            <p class="sec-desc"><span class="sample-note">※ 掲載のコメントは現在イメージです（実データに差し替え予定）</span></p>
           </div>
           <div class="grid grid-3">
             <article class="voice reveal" data-accent="cyan">
@@ -347,17 +373,23 @@
               <h2 class="sec-title">まずはお気軽にご相談ください</h2>
               <p class="contact__sub">事業の「面白い」を、一緒に大きくしましょう。</p>
             </div>
-            <form class="contact__form" id="contactForm">
+            <!-- 本番化：action に送信先(例: Formspree の https://formspree.io/f/xxxxxx）を設定すると、そのまま送信できます -->
+            <form class="contact__form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
               <div class="contact__reassure">
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>相談は無料</span>
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>売り込みはしません</span>
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>1営業日以内に返信</span>
               </div>
-              <input type="text" placeholder="会社名" />
-              <input type="text" placeholder="ご担当者名" />
-              <input type="email" placeholder="メールアドレス" />
-              <input type="tel" placeholder="電話番号（任意）" />
-              <select aria-label="ご相談の種別">
+              <label class="sr-only" for="f-company">会社名</label>
+              <input id="f-company" name="会社名" type="text" placeholder="会社名" aria-label="会社名" />
+              <label class="sr-only" for="f-name">ご担当者名</label>
+              <input id="f-name" name="ご担当者名" type="text" placeholder="ご担当者名" aria-label="ご担当者名" required />
+              <label class="sr-only" for="f-email">メールアドレス</label>
+              <input id="f-email" name="メールアドレス" type="email" placeholder="メールアドレス" aria-label="メールアドレス" required />
+              <label class="sr-only" for="f-tel">電話番号（任意）</label>
+              <input id="f-tel" name="電話番号" type="tel" placeholder="電話番号（任意）" aria-label="電話番号（任意）" />
+              <label class="sr-only" for="f-type">ご相談の種別</label>
+              <select id="f-type" name="ご相談の種別" aria-label="ご相談の種別">
                 <option value="">ご相談の種別を選択</option>
                 <option>無料相談・お問い合わせ</option>
                 <option>サービス資料がほしい</option>
@@ -365,7 +397,8 @@
                 <option>採用について</option>
                 <option>その他</option>
               </select>
-              <textarea rows="4" placeholder="ご相談内容"></textarea>
+              <label class="sr-only" for="f-message">ご相談内容</label>
+              <textarea id="f-message" name="ご相談内容" rows="4" placeholder="ご相談内容" aria-label="ご相談内容" required></textarea>
               <label class="consent"><input type="checkbox" id="consent" /><span><a href="#privacy">プライバシーポリシー</a>に同意のうえ送信します</span></label>
               <button type="submit" class="btn btn--primary btn--wide btn--lg">無料で相談する <span>▶</span></button>
               <p class="contact__note" id="formNote"></p>

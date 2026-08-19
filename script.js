@@ -73,17 +73,26 @@
   var form = document.getElementById("contactForm");
   if (form) {
     form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
       var note = document.getElementById("formNote");
       var consent = document.getElementById("consent");
       if (consent && !consent.checked) {
+        ev.preventDefault();
         note.style.color = "var(--pink)";
         note.textContent = "プライバシーポリシーへの同意が必要です。";
         return;
       }
+      var action = form.getAttribute("action") || "";
+      if (action.indexOf("YOUR_FORM_ID") >= 0 || action === "") {
+        // 送信先が未設定 → デモ表示（本番は action に送信先を設定すると実送信されます）
+        ev.preventDefault();
+        note.style.color = "";
+        note.textContent = "送信ありがとうございます（デモ表示：公開前に送信先の設定が必要です）";
+        form.reset();
+        return;
+      }
+      // 送信先が設定済み → 同意済みなのでそのまま送信
       note.style.color = "";
-      note.textContent = "送信ありがとうございます（デモ表示）";
-      form.reset();
+      note.textContent = "送信中…";
     });
   }
 
