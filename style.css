@@ -378,3 +378,21 @@ a { color: inherit; text-decoration: none; }
   .scoreboard__cell { border-right: none; border-bottom: 2px solid rgba(255,255,255,.08); }
   .why-grid { grid-template-columns: 1fr; }
 }
+
+/* =====================================================
+   ラインアイコン（絵文字置き換え）
+   ===================================================== */
+.ic {
+  display: inline-block; vertical-align: middle; width: 26px; height: 26px;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+.ic--sm { width: 18px; height: 18px; }
+/* PROCESS の各ステップ：アクセント色（アンバー）で発光 */
+.steps__ico { color: var(--acc); line-height: 0; }
+.steps__ico .ic { width: 30px; height: 30px; }
+/* サービスカードのアイコン（色は card--* のアクセントを継承） */
+.card__no { line-height: 0; }
+.card__no .ic { width: 30px; height: 30px; }
+/* WHO のチェック */
+.who__ico .ic { position: relative; top: 1px; }

@@ -388,10 +388,42 @@ a { color: inherit; text-decoration: none; }
   .why-grid { grid-template-columns: 1fr; }
 }
 
+/* =====================================================
+   ラインアイコン（絵文字置き換え）
+   ===================================================== */
+.ic {
+  display: inline-block; vertical-align: middle; width: 26px; height: 26px;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+.ic--sm { width: 18px; height: 18px; }
+/* PROCESS の各ステップ：アクセント色（アンバー）で発光 */
+.steps__ico { color: var(--acc); line-height: 0; }
+.steps__ico .ic { width: 30px; height: 30px; }
+/* サービスカードのアイコン（色は card--* のアクセントを継承） */
+.card__no { line-height: 0; }
+.card__no .ic { width: 30px; height: 30px; }
+/* WHO のチェック */
+.who__ico .ic { position: relative; top: 1px; }
+
 </style>
 
     <div class="crt" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
+
+    <!-- アイコン定義（ラインSVGスプライト） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16" y2="16"/></symbol>
+        <symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></symbol>
+        <symbol id="ic-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+        <symbol id="ic-rocket" viewBox="0 0 24 24"><path d="M12 3c3 2 4.5 5 4.5 8l-2 4h-5l-2-4c0-3 1.5-6 4.5-8z"/><circle cx="12" cy="10" r="1.7"/><path d="M9.5 17 7 20M14.5 17 17 20"/></symbol>
+        <symbol id="ic-trend" viewBox="0 0 24 24"><polyline points="4,16 10,10 13,13 20,6"/><polyline points="15,6 20,6 20,11"/></symbol>
+        <symbol id="ic-layers" viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16l8 4 8-4"/></symbol>
+        <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.6 6.4L20 11l-6.4 1.6L12 19l-1.6-6.4L4 11l6.4-1.6z"/></symbol>
+        <symbol id="ic-check" viewBox="0 0 24 24"><polyline points="5,13 10,18 19,6"/></symbol>
+      </defs>
+    </svg>
 
     <!-- ======================= ヘッダー ======================= -->
     <header class="header">
@@ -468,13 +500,13 @@ a { color: inherit; text-decoration: none; }
               <div class="terminal">
                 <div class="terminal__bar"><i></i><i></i><i></i><span>buppan // who_we_are</span></div>
                 <p class="lead-lg">私たちは「手段」ではなく「成長」からはじめる。</p>
-                <p>世の中には、広告・Web・AIといった優れた手段があふれています。けれど本当に必要なのは、手段を選ぶ前に描くべき<strong>事業そのものの設計図</strong>。BUPPANは、上流の戦略から現場の実行までをひとつのチームで担い、クライアントの事業を「面白く、大きく」育てるパートナーです。</p>
+                <p>手段の前に、描くべきは<strong>事業そのものの設計図</strong>。戦略から実行までをワンチームで担い、事業を「面白く、大きく」育てます。</p>
               </div>
             </div>
             <ul class="who__points reveal">
-              <li><span class="who__ico">◆</span><div><b>事業視点</b>手段起点ではなく、事業のP/Lから逆算して設計する。</div></li>
-              <li><span class="who__ico">◆</span><div><b>一気通貫</b>戦略・企画・制作・運用まで、分断せず一貫して伴走する。</div></li>
-              <li><span class="who__ico">◆</span><div><b>成果主義</b>アウトプットではなく、事業成果（数字）にコミットする。</div></li>
+              <li><span class="who__ico"><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg></span><div><b>事業視点</b>手段起点ではなく、事業のP/Lから逆算して設計する。</div></li>
+              <li><span class="who__ico"><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg></span><div><b>一気通貫</b>戦略・企画・制作・運用まで、分断せず一貫して伴走する。</div></li>
+              <li><span class="who__ico"><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg></span><div><b>成果主義</b>アウトプットではなく、事業成果（数字）にコミットする。</div></li>
             </ul>
           </div>
         </div>
@@ -492,10 +524,10 @@ a { color: inherit; text-decoration: none; }
             <p class="sec-desc">戦略から実行まで、事業成長に必要な4領域をワンチームで。</p>
           </div>
           <div class="grid grid-4">
-            <article class="card card--cyan reveal"><div class="card__no">A</div><h3>事業戦略</h3><p>市場・競合・自社を読み解き、勝ち筋のある事業戦略を設計します。</p><span class="tag">STRATEGY</span></article>
-            <article class="card card--pink reveal"><div class="card__no">B</div><h3>事業開発</h3><p>新規事業の立ち上げから収益化まで、0→1と1→10を伴走します。</p><span class="tag">DEVELOPMENT</span></article>
-            <article class="card card--lime reveal"><div class="card__no">C</div><h3>グロース</h3><p>マーケティング・CRM・データ活用で、継続的な成長を仕組み化。</p><span class="tag">GROWTH</span></article>
-            <article class="card card--amber reveal"><div class="card__no">D</div><h3>ブランディング</h3><p>らしさを言語化し、選ばれ続けるブランド体験に落とし込みます。</p><span class="tag">BRANDING</span></article>
+            <article class="card card--cyan reveal"><div class="card__no"><svg class="ic" aria-hidden="true"><use href="#ic-target"/></svg></div><h3>事業戦略</h3><p>市場と競合を読み解き、勝ち筋を設計する。</p><span class="tag">STRATEGY</span></article>
+            <article class="card card--pink reveal"><div class="card__no"><svg class="ic" aria-hidden="true"><use href="#ic-rocket"/></svg></div><h3>事業開発</h3><p>0→1から収益化まで、事業づくりを伴走。</p><span class="tag">DEVELOPMENT</span></article>
+            <article class="card card--lime reveal"><div class="card__no"><svg class="ic" aria-hidden="true"><use href="#ic-trend"/></svg></div><h3>グロース</h3><p>マーケとデータで、成長を仕組み化する。</p><span class="tag">GROWTH</span></article>
+            <article class="card card--amber reveal"><div class="card__no"><svg class="ic" aria-hidden="true"><use href="#ic-sparkle"/></svg></div><h3>ブランディング</h3><p>らしさを、選ばれ続ける体験に変える。</p><span class="tag">BRANDING</span></article>
           </div>
         </div>
       </section>
@@ -529,11 +561,11 @@ a { color: inherit; text-decoration: none; }
             <h2 class="sec-title">事業成長までの5ステップ</h2>
           </div>
           <ol class="steps reveal">
-            <li><span class="steps__no">01</span><span class="steps__ico">🔍</span><b>現状把握</b><small>事業と市場を可視化</small></li>
-            <li><span class="steps__no">02</span><span class="steps__ico">📝</span><b>課題設計</b><small>解くべき問いを定義</small></li>
-            <li><span class="steps__no">03</span><span class="steps__ico">✦</span><b>戦略立案</b><small>勝ち筋を描く</small></li>
-            <li><span class="steps__no">04</span><span class="steps__ico">🚀</span><b>実行支援</b><small>現場で共に動く</small></li>
-            <li><span class="steps__no">05</span><span class="steps__ico">📈</span><b>成長の継続</b><small>仕組みで伸ばす</small></li>
+            <li><span class="steps__no">01</span><span class="steps__ico"><svg class="ic" aria-hidden="true"><use href="#ic-search"/></svg></span><b>現状把握</b><small>事業と市場を可視化</small></li>
+            <li><span class="steps__no">02</span><span class="steps__ico"><svg class="ic" aria-hidden="true"><use href="#ic-clipboard"/></svg></span><b>課題設計</b><small>解くべき問いを定義</small></li>
+            <li><span class="steps__no">03</span><span class="steps__ico"><svg class="ic" aria-hidden="true"><use href="#ic-target"/></svg></span><b>戦略立案</b><small>勝ち筋を描く</small></li>
+            <li><span class="steps__no">04</span><span class="steps__ico"><svg class="ic" aria-hidden="true"><use href="#ic-rocket"/></svg></span><b>実行支援</b><small>現場で共に動く</small></li>
+            <li><span class="steps__no">05</span><span class="steps__ico"><svg class="ic" aria-hidden="true"><use href="#ic-trend"/></svg></span><b>成長の継続</b><small>仕組みで伸ばす</small></li>
           </ol>
         </div>
       </section>
@@ -563,7 +595,7 @@ a { color: inherit; text-decoration: none; }
         <div class="container message-wrap reveal">
           <p class="eyebrow">06 / MESSAGE</p>
           <p class="message__big">「面白い」を、<br class="sp" />数字で証明する。</p>
-          <p class="message__body">私たちは「事業をつくる」ことそのものに向き合い続けます。手段に縛られず、クライアントの成長を第一に、上流の戦略から現場の実行まで、ひとつのチームとして伴走する。面白いと思える事業を、ちゃんと大きくする。その両立こそがBUPPANの流儀です。</p>
+          <p class="message__body">手段に縛られず、事業の成長そのものに向き合う。戦略から実行まで、ひとつのチームで伴走する。面白い事業を、ちゃんと大きくする——それがBUPPANの流儀です。</p>
           <p class="message__sign">— BUPPAN 代表</p>
         </div>
       </section>
