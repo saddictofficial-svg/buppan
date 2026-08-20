@@ -446,6 +446,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* 実績・声のイメージ注記 */
 .sample-note { display: block; font-size: 11px; color: var(--muted); opacity: .85; margin-top: 6px; }
 
+/* ヒーローのタグライン・キッカー（日本語なのでゴシックで少し大きめに） */
+.eyebrow--tagline { font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-size: 14px; font-weight: 700; letter-spacing: .04em; }
+
 /* =====================================================
    LP強化（課題提起・CTA・フォーム・会社概要）
    ===================================================== */
