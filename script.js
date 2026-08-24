@@ -392,3 +392,56 @@
     ro.observe(canvas);
   }
 })();
+
+/* ===== 実写ムービーFV（ドット絵化＋ネオン＋グリッチ）※PC・素材ありのみ ===== */
+(function () {
+  var reduceV = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var video = document.getElementById("fvVideo");
+  var vcanvas = document.getElementById("fvVideoCanvas");
+  var city = document.getElementById("cityCanvas");
+  if (!video || !vcanvas || !city || reduceV) return;
+  if (window.innerWidth <= 768) return; // モバイルはデータ節約でドット絵のまま
+  var ctx = vcanvas.getContext("2d");
+  var PIXEL = 6, W = 0, H = 0, ready = false, raf, glitch = 0, glitchT = 90;
+  function size() {
+    var r = vcanvas.getBoundingClientRect();
+    W = Math.max(80, Math.round(r.width / PIXEL));
+    H = Math.max(60, Math.round(r.height / PIXEL));
+    vcanvas.width = W; vcanvas.height = H;
+  }
+  function start() {
+    if (ready) return;
+    ready = true; size();
+    city.style.display = "none";
+    vcanvas.style.display = "block";
+    raf = requestAnimationFrame(draw);
+  }
+  function draw() {
+    if (video.readyState >= 2 && video.videoWidth) {
+      var vw = video.videoWidth, vh = video.videoHeight;
+      var s = Math.max(W / vw, H / vh), dw = vw * s, dh = vh * s;
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(video, (W - dw) / 2, (H - dh) / 2, dw, dh);
+      // ネオングレード
+      ctx.globalCompositeOperation = "overlay";
+      ctx.fillStyle = "rgba(34,211,238,0.12)"; ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = "source-over";
+      // 地平線の残光
+      ctx.fillStyle = "rgba(255,45,149,0.08)"; ctx.fillRect(0, Math.floor(H * 0.7), W, Math.ceil(H * 0.3));
+      // グリッチ（時々、横スライスをずらす）
+      glitchT--;
+      if (glitchT < 0) { glitch = 5; glitchT = Math.floor(80 + Math.random() * 160); }
+      if (glitch > 0) {
+        var y = (Math.random() * (H - 6)) | 0, hh = (2 + Math.random() * 4) | 0, off = ((Math.random() * 10) - 5) | 0;
+        try { var im = ctx.getImageData(0, y, W, hh); ctx.putImageData(im, off, y); } catch (e) {}
+        glitch--;
+      }
+    }
+    raf = requestAnimationFrame(draw);
+  }
+  video.addEventListener("playing", start);
+  video.addEventListener("canplay", function () { video.play().then(start).catch(function () {}); });
+  video.play().then(start).catch(function () { /* 自動再生不可→ドット絵のまま */ });
+  var rz;
+  window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(function () { if (ready) size(); }, 200); });
+})();
