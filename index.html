@@ -43,6 +43,15 @@
   </head>
 
   <body>
+    <!-- 起動演出（BOOTムービー） -->
+    <div class="boot" id="boot" aria-hidden="true">
+      <div class="boot__inner">
+        <div class="boot__logo">BUPPAN</div>
+        <pre class="boot__log" id="bootLog"></pre>
+        <div class="boot__bar"><i id="bootBar"></i></div>
+      </div>
+    </div>
+
     <div class="crt" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
 
@@ -96,6 +105,7 @@
       <!-- ======================= FV ======================= -->
       <section class="hero">
         <canvas class="hero__canvas" id="cityCanvas" aria-label="みなとみらいの夜景をドット絵で表現したイメージ"></canvas>
+        <div class="hero__cine" aria-hidden="true"></div>
         <div class="hero__scrim" aria-hidden="true"></div>
         <div class="container hero__inner">
           <div class="hero__copy reveal">

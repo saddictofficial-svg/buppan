@@ -230,6 +230,23 @@ a { color: inherit; text-decoration: none; }
 .reveal.is-in { opacity: 1; transform: none; }
 
 /* ===== CRT / スキャンライン ===== */
+/* ===== 起動演出（BOOTムービー） ===== */
+.boot { position: fixed; inset: 0; z-index: 1000; background: #05070f; display: flex; align-items: center; justify-content: center; overflow: hidden; animation: bootFail .1s linear 5s forwards; }
+.boot::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,.28) 0 1px, transparent 1px 3px); }
+.boot.is-done { opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility .5s; }
+@keyframes bootFail { to { opacity: 0; visibility: hidden; } }
+.boot__inner { position: relative; z-index: 1; width: min(520px, 86%); font-family: "Press Start 2P", monospace; }
+.boot__logo { font-size: clamp(22px, 5vw, 30px); color: var(--cyan); text-shadow: 0 0 18px rgba(34,211,238,.85); letter-spacing: .14em; margin-bottom: 22px; }
+.boot__log { font-size: 10px; line-height: 2; color: var(--lime); min-height: 92px; margin: 0; white-space: pre-wrap; text-shadow: 0 0 8px rgba(198,245,66,.5); }
+.boot__bar { height: 12px; border: 2px solid var(--line); margin-top: 18px; }
+.boot__bar i { display: block; height: 100%; width: 0; background: var(--lime); box-shadow: 0 0 14px var(--lime); transition: width .25s linear; }
+
+/* ===== シネマティックFV（カメラの動き＋光のドリフト） ===== */
+.hero__canvas { animation: heroKen 26s ease-in-out infinite alternate; transform-origin: center; }
+@keyframes heroKen { from { transform: scale(1.03); } to { transform: scale(1.09) translate(-1.6%, -1%); } }
+.hero__cine { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(55% 45% at 28% 22%, rgba(34,211,238,.12), transparent 62%); animation: heroCine 16s ease-in-out infinite alternate; }
+@keyframes heroCine { from { transform: translate(-6%, -4%); opacity: .7; } to { transform: translate(14%, 8%); opacity: 1; } }
+
 .crt { position: fixed; inset: 0; z-index: 900; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,.14) 0 1px, transparent 1px 3px); mix-blend-mode: multiply; opacity: .5; }
 .vignette { position: fixed; inset: 0; z-index: 901; pointer-events: none; box-shadow: inset 0 0 180px rgba(0,0,0,.7); }
 
@@ -562,6 +579,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 </style>
 
+    <!-- 起動演出（BOOTムービー） -->
+    <div class="boot" id="boot" aria-hidden="true">
+      <div class="boot__inner">
+        <div class="boot__logo">BUPPAN</div>
+        <pre class="boot__log" id="bootLog"></pre>
+        <div class="boot__bar"><i id="bootBar"></i></div>
+      </div>
+    </div>
+
     <div class="crt" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
 
@@ -615,6 +641,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <!-- ======================= FV ======================= -->
       <section class="hero">
         <canvas class="hero__canvas" id="cityCanvas" aria-label="みなとみらいの夜景をドット絵で表現したイメージ"></canvas>
+        <div class="hero__cine" aria-hidden="true"></div>
         <div class="hero__scrim" aria-hidden="true"></div>
         <div class="container hero__inner">
           <div class="hero__copy reveal">
@@ -1090,6 +1117,35 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 (function () {
   "use strict";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- 起動演出（BOOTムービー） ---------- */
+  (function () {
+    var boot = document.getElementById("boot");
+    if (!boot) return;
+    if (reduce) { boot.remove(); return; }
+    try { if (sessionStorage.getItem("buppan_booted")) { boot.remove(); return; } sessionStorage.setItem("buppan_booted", "1"); } catch (e) {}
+    var log = document.getElementById("bootLog");
+    var bar = document.getElementById("bootBar");
+    var lines = ["> BOOT SEQUENCE START", "> LOADING GROWTH ENGINE ...", "> SYNC MINATOMIRAI NET ...", "> STATUS: ALL SYSTEMS ONLINE"];
+    document.body.style.overflow = "hidden";
+    var i = 0;
+    function step() {
+      if (i < lines.length) {
+        log.textContent += lines[i] + "\n";
+        bar.style.width = Math.round((i + 1) / lines.length * 100) + "%";
+        i++;
+        setTimeout(step, 300);
+      } else {
+        setTimeout(done, 350);
+      }
+    }
+    function done() {
+      boot.classList.add("is-done");
+      document.body.style.overflow = "";
+      setTimeout(function () { if (boot.parentNode) boot.remove(); }, 600);
+    }
+    setTimeout(step, 220);
+  })();
 
   /* ---------- スマホメニュー ---------- */
   var menuToggle = document.getElementById("menuToggle");

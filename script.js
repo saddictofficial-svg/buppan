@@ -5,6 +5,35 @@
   "use strict";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---------- 起動演出（BOOTムービー） ---------- */
+  (function () {
+    var boot = document.getElementById("boot");
+    if (!boot) return;
+    if (reduce) { boot.remove(); return; }
+    try { if (sessionStorage.getItem("buppan_booted")) { boot.remove(); return; } sessionStorage.setItem("buppan_booted", "1"); } catch (e) {}
+    var log = document.getElementById("bootLog");
+    var bar = document.getElementById("bootBar");
+    var lines = ["> BOOT SEQUENCE START", "> LOADING GROWTH ENGINE ...", "> SYNC MINATOMIRAI NET ...", "> STATUS: ALL SYSTEMS ONLINE"];
+    document.body.style.overflow = "hidden";
+    var i = 0;
+    function step() {
+      if (i < lines.length) {
+        log.textContent += lines[i] + "\n";
+        bar.style.width = Math.round((i + 1) / lines.length * 100) + "%";
+        i++;
+        setTimeout(step, 300);
+      } else {
+        setTimeout(done, 350);
+      }
+    }
+    function done() {
+      boot.classList.add("is-done");
+      document.body.style.overflow = "";
+      setTimeout(function () { if (boot.parentNode) boot.remove(); }, 600);
+    }
+    setTimeout(step, 220);
+  })();
+
   /* ---------- スマホメニュー ---------- */
   var menuToggle = document.getElementById("menuToggle");
   var nav = document.getElementById("nav");
