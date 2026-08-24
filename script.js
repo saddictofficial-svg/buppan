@@ -415,7 +415,9 @@
   var SCALE = 5, W = 0, H = 0;
   var COLORS = ["#22d3ee", "#c6f542", "#ff2d95", "#ffb300", "#eaf0ff"];
   var parts = [], shoot = null, ufo = null;
-  var fwT = 200, shootT = 260, ufoT = 700;
+  var fwT = 120, shootT = 480, ufoT = 1800;
+  var active = false;
+  setTimeout(function () { active = true; }, 44000); // 44秒後に演出スタート
   function size() {
     var r = fx.getBoundingClientRect();
     W = Math.max(120, Math.round(r.width / SCALE));
@@ -443,8 +445,9 @@
   }
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    // 花火
-    fwT--; if (fwT < 0) { firework(); fwT = Math.floor(300 + Math.random() * 340); }
+    if (!active) { ctx.globalAlpha = 1; raf = requestAnimationFrame(draw); return; } // 44秒経過まで演出しない
+    // 花火（間隔：約13〜23秒）
+    fwT--; if (fwT < 0) { firework(); fwT = Math.floor(780 + Math.random() * 600); }
     for (var i = parts.length - 1; i >= 0; i--) {
       var p = parts[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.03; p.life--;
       if (p.life <= 0) { parts.splice(i, 1); continue; }
@@ -455,11 +458,11 @@
     if (shoot) {
       shoot.x -= 2.4; shoot.y += 1.2;
       for (var k = 0; k < 8; k++) px(shoot.x + k * 2, shoot.y - k, "#eaf0ff", 0.9 - k * 0.11);
-      if (shoot.x < 0 || shoot.y > H * 0.6) { shoot = null; shootT = Math.floor(260 + Math.random() * 420); }
+      if (shoot.x < 0 || shoot.y > H * 0.6) { shoot = null; shootT = Math.floor(900 + Math.random() * 780); } // 間隔：約15〜28秒
     }
     // UFO（レア）
     ufoT--; if (!ufo && ufoT < 0) { ufo = { x: -16, y: 8 + Math.random() * H * 0.22, dir: 1, t: 0 }; if (Math.random() < 0.5) { ufo.x = W + 16; ufo.dir = -1; } }
-    if (ufo) { ufo.x += 0.7 * ufo.dir; ufo.t++; drawUfo(ufo); if (ufo.x < -18 || ufo.x > W + 18) { ufo = null; ufoT = Math.floor(1000 + Math.random() * 1600); } }
+    if (ufo) { ufo.x += 0.7 * ufo.dir; ufo.t++; drawUfo(ufo); if (ufo.x < -18 || ufo.x > W + 18) { ufo = null; ufoT = Math.floor(2700 + Math.random() * 3000); } } // 間隔：約45〜95秒
     ctx.globalAlpha = 1;
     raf = requestAnimationFrame(draw);
   }
