@@ -400,10 +400,26 @@
   var city = document.getElementById("cityCanvas");
   if (!video || !city || reduceV) return;
   if (window.innerWidth <= 768) return; // モバイルはデータ節約でドット絵のまま
+
+  // 9:00〜16:00は昼景、それ以外は夜景。昼素材が無ければ夜景へフォールバック。
+  var NIGHT = "assets/mm_fx.mp4", DAY = "assets/mm_day_fx.mp4";
+  var h = new Date().getHours();
+  var daytime = h >= 9 && h < 16;
+  var srcEl = video.querySelector("source");
+  var triedNight = false;
+
   function show() { city.style.display = "none"; video.style.display = "block"; }
+  function load(src) {
+    if (srcEl) srcEl.src = src; else video.src = src;
+    video.load();
+    video.play().then(show).catch(function () {});
+  }
   video.addEventListener("playing", show);
   video.addEventListener("canplay", function () { video.play().then(show).catch(function () {}); });
-  video.play().then(show).catch(function () { /* 自動再生不可→ドット絵のまま */ });
+  video.addEventListener("error", function () {
+    if (daytime && !triedNight) { triedNight = true; load(NIGHT); } // 昼素材が未配置→夜景で表示
+  }, true);
+  load(daytime ? DAY : NIGHT);
 })();
 
 /* ===== FV演出レイヤー（花火・流れ星・UFO／ドット絵・全環境） ===== */
@@ -472,4 +488,126 @@
   size();
   if (!reduce) raf = requestAnimationFrame(draw);
   var rz; window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(size, 200); });
+})();
+
+/* ===== 30秒 成長診断（紙芝居・BUPPANへ誘導） ===== */
+(function () {
+  var stage = document.getElementById("diagStage");
+  var bar = document.getElementById("diagBar");
+  if (!stage) return;
+
+  var QUESTIONS = [
+    { q: "いま、事業で一番モヤモヤしているのは？", opts: [
+      { t: "集客・問い合わせが思うように増えない", w: 3 },
+      { t: "広告やSNSにお金をかけているが手応えがない", w: 3 },
+      { t: "新しい事業・商品をどう伸ばすか決めきれない", w: 3 },
+      { t: "大きな不満はない。さらに上を目指したい", w: 1 } ] },
+    { q: "広告やSNSの成果を“数字”で説明できますか？", opts: [
+      { t: "ばっちり説明できる", w: 0 },
+      { t: "なんとなくは分かる", w: 2 },
+      { t: "正直わからない", w: 3 },
+      { t: "そもそも計測していない", w: 3 } ] },
+    { q: "“勝ち筋”（誰に・何を・どう売るか）は言語化されている？", opts: [
+      { t: "明確にある", w: 0 },
+      { t: "ある程度ある", w: 2 },
+      { t: "感覚でやっている", w: 3 } ] },
+    { q: "施策を実行しきる人手・ノウハウは社内に足りている？", opts: [
+      { t: "十分ある", w: 0 },
+      { t: "ぎりぎり回している", w: 2 },
+      { t: "足りていない", w: 3 } ] },
+    { q: "直近1年、売上は思い描いたペースで伸びている？", opts: [
+      { t: "期待以上に伸びている", w: 1 },
+      { t: "ほぼ想定どおり", w: 2 },
+      { t: "伸び悩んでいる", w: 3 } ] },
+    { q: "広告費・販促費は、根拠を持って配分できている？", opts: [
+      { t: "根拠を持って配分している", w: 0 },
+      { t: "一部は感覚で決めている", w: 2 },
+      { t: "ほぼ感覚・前年踏襲", w: 3 } ] },
+    { q: "『まだ伸ばせるはず』という手応えはありますか？", opts: [
+      { t: "強くある", w: 3 },
+      { t: "少しある", w: 2 },
+      { t: "正直わからない", w: 3 } ] }
+  ];
+  var MAX = 21;
+  var KEYS = ["A", "B", "C", "D", "E"];
+
+  var RESULTS = [
+    { min: 13, badge: "要相談・伸びしろ大", title: "いますぐ相談を。伸びしろが眠っています", accent: "pink",
+      desc: "あなたの事業には、まだ活かしきれていない<b>伸びしろ</b>が眠っています。課題は明確——あとは“実行力”を掛け合わせるだけ。BUPPANは戦略設計から実行・数値改善まで<b>ワンチームで伴走</b>し、停滞を成長に変えます。まずは無料相談で、現状を一緒に整理しませんか？" },
+    { min: 7, badge: "相談推奨", title: "“あと一段”を、プロの視点で引き上げる", accent: "cyan",
+      desc: "事業は動いていますが、<b>“あと一段”の伸びしろ</b>があります。第三者の視点で勝ち筋を磨き、数字で改善を回せば成長は加速します。BUPPANが客観的な分析と実行支援で、その一段を引き上げます。" },
+    { min: 0, badge: "壁が来たら相談を", title: "基盤は良好。“次の一手”は壁打ちが効く", accent: "lime",
+      desc: "基盤はしっかり整っています。さらなる拡大や<b>ROASの最大化</b>、新規事業の立ち上げなど“次の一手”のフェーズでは、実績豊富なパートナーとの壁打ちが効きます。伸ばしきるための相談先として、BUPPANをご活用ください。" }
+  ];
+
+  var idx = 0, score = 0;
+
+  function setBar(pct) { if (bar) bar.style.width = pct + "%"; }
+
+  function esc(s) { return s; } // 静的文言のみ
+
+  function renderIntro() {
+    idx = 0; score = 0; setBar(0);
+    stage.innerHTML =
+      '<div class="diag-slide diag__center">' +
+        '<p class="diag__lead">いまの事業に、あと何倍の伸びしろがある？<br>7つの質問で、あなたの“成長ポテンシャル”を診断します。</p>' +
+        '<p class="diag__sub">所要 約30秒／回答はその場で表示されます</p>' +
+        '<div class="diag__badges"><span class="diag__chip">集客・売上</span><span class="diag__chip">広告・SNS</span><span class="diag__chip">新規事業</span><span class="diag__chip">実行体制</span></div>' +
+        '<button class="diag__btn" id="diagStart">診断をはじめる ▶</button>' +
+      '</div>';
+    var b = document.getElementById("diagStart");
+    if (b) b.addEventListener("click", function () { idx = 0; score = 0; renderQuestion(); });
+  }
+
+  function renderQuestion() {
+    var Q = QUESTIONS[idx];
+    setBar(Math.round(idx / QUESTIONS.length * 100));
+    var html = '<div class="diag-slide">' +
+      '<p class="diag__meta">Q' + (idx + 1) + ' / ' + QUESTIONS.length + '</p>' +
+      '<p class="diag__q">' + Q.q + '</p>' +
+      '<div class="diag__opts">';
+    for (var i = 0; i < Q.opts.length; i++) {
+      html += '<button class="diag-opt" data-w="' + Q.opts[i].w + '">' +
+        '<span class="diag-opt__key">' + KEYS[i] + '</span><span>' + Q.opts[i].t + '</span></button>';
+    }
+    html += '</div></div>';
+    stage.innerHTML = html;
+    var btns = stage.querySelectorAll(".diag-opt");
+    for (var k = 0; k < btns.length; k++) {
+      btns[k].addEventListener("click", function () {
+        score += parseInt(this.getAttribute("data-w"), 10) || 0;
+        idx++;
+        if (idx < QUESTIONS.length) renderQuestion(); else renderResult();
+      });
+    }
+  }
+
+  function renderResult() {
+    setBar(100);
+    var r = RESULTS[0];
+    for (var i = 0; i < RESULTS.length; i++) { if (score >= RESULTS[i].min) { r = RESULTS[i]; break; } }
+    var pct = Math.round(score / MAX * 100);
+    var diag = document.getElementById("diag");
+    if (diag) diag.setAttribute("data-accent", r.accent);
+    stage.innerHTML =
+      '<div class="diag-slide diag__center">' +
+        '<p class="diag-res__eyebrow">RESULT</p>' +
+        '<div class="diag-res__score">' + pct + '<small>/100 伸びしろ</small></div>' +
+        '<div class="diag-res__meter"><i style="width:' + pct + '%"></i></div>' +
+        '<span class="diag-res__badge">' + r.badge + '</span>' +
+        '<h3 class="diag-res__title">' + r.title + '</h3>' +
+        '<p class="diag-res__desc">' + r.desc + '</p>' +
+        '<div class="diag-res__actions">' +
+          '<a class="diag__btn" href="#contact">無料で相談する ▶</a>' +
+          '<button class="diag__btn diag__btn--ghost" id="diagRetry">もう一度診断する</button>' +
+        '</div>' +
+      '</div>';
+    var rt = document.getElementById("diagRetry");
+    if (rt) rt.addEventListener("click", function () {
+      if (diag) diag.setAttribute("data-accent", "cyan");
+      renderIntro();
+    });
+  }
+
+  renderIntro();
 })();

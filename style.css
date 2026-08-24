@@ -568,3 +568,51 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (max-width: 820px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .grid-3 { grid-template-columns: 1fr; } }
+
+/* ===== 課題セクション：悩む人ドット絵 ===== */
+.pain-illus { display: block; width: clamp(96px, 16vw, 132px); height: auto; margin: 0 auto 16px; image-rendering: pixelated; filter: drop-shadow(0 0 10px rgba(255,45,149,.35)); }
+
+/* ===== 成長診断（紙芝居コンソール） ===== */
+.diag { position: relative; max-width: 720px; margin: 6px auto 0; padding: 26px clamp(18px, 4vw, 34px) 30px; background: linear-gradient(180deg, rgba(12,18,38,.92), rgba(7,11,22,.96)); border: 2px solid var(--acc); border-radius: 14px; box-shadow: 0 0 30px var(--acc-glow), 0 22px 50px rgba(0,0,0,.5); overflow: hidden; min-height: 440px; display: flex; flex-direction: column; }
+.diag__scan { position: absolute; inset: 0; pointer-events: none; z-index: 2; background: repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 1px, transparent 1px 3px); opacity: .5; }
+.diag__bar { position: relative; z-index: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.08); overflow: hidden; margin-bottom: 22px; }
+.diag__bar i { display: block; height: 100%; width: 0; border-radius: 3px; background: linear-gradient(90deg, var(--acc), #eaf0ff); box-shadow: 0 0 10px var(--acc-glow); transition: width .45s cubic-bezier(.2,.8,.2,1); }
+.diag__stage { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.diag__ns { text-align: center; color: var(--muted); }
+
+.diag-slide { animation: diagIn .38s ease both; }
+@keyframes diagIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.diag__meta { font-family: "Press Start 2P", monospace; font-size: 10px; letter-spacing: .06em; color: var(--acc); margin-bottom: 12px; }
+.diag__q { font-size: clamp(18px, 2.5vw, 23px); font-weight: 800; line-height: 1.55; color: var(--text); margin: 0 0 20px; }
+.diag__opts { display: grid; gap: 10px; }
+.diag-opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; color: var(--text); font-size: 15px; line-height: 1.5; cursor: pointer; transition: border-color .18s, background .18s, transform .18s, box-shadow .18s; }
+.diag-opt:hover, .diag-opt:focus-visible { border-color: var(--acc); background: rgba(34,211,238,.08); transform: translateX(3px); box-shadow: 0 0 16px var(--acc-glow); outline: none; }
+.diag-opt__key { flex-shrink: 0; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 7px; background: var(--acc); color: #07101e; font-family: "Press Start 2P", monospace; font-size: 10px; }
+
+/* イントロ／結果 */
+.diag__center { text-align: center; }
+.diag__lead { font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; line-height: 1.7; color: var(--text); margin: 0 auto 8px; max-width: 34em; }
+.diag__sub { font-size: 13px; color: var(--muted); margin: 0 auto 22px; }
+.diag__badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px; }
+.diag__chip { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; }
+.diag__btn { display: inline-flex; align-items: center; gap: 10px; font-family: "Press Start 2P", monospace; font-size: 12px; letter-spacing: .04em; padding: 15px 26px; border: 0; border-radius: 10px; background: var(--acc); color: #07101e; cursor: pointer; box-shadow: 0 0 22px var(--acc-glow); transition: transform .15s, filter .15s; text-decoration: none; }
+.diag__btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.diag__btn--ghost { background: transparent; color: var(--muted); box-shadow: none; border: 1px solid var(--line); font-family: inherit; font-size: 13px; letter-spacing: 0; padding: 11px 18px; }
+.diag__btn--ghost:hover { color: var(--text); border-color: var(--acc); }
+
+.diag-res__eyebrow { font-family: "Press Start 2P", monospace; font-size: 10px; color: var(--acc); margin-bottom: 14px; }
+.diag-res__score { font-family: "Press Start 2P", monospace; font-size: clamp(34px, 8vw, 52px); color: var(--text); line-height: 1; text-shadow: 0 0 18px var(--acc-glow); }
+.diag-res__score small { font-size: .34em; color: var(--muted); margin-left: 6px; letter-spacing: 0; }
+.diag-res__meter { max-width: 320px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.08); overflow: hidden; margin: 16px auto 20px; }
+.diag-res__meter i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--acc), #eaf0ff); box-shadow: 0 0 12px var(--acc-glow); }
+.diag-res__badge { display: inline-block; font-weight: 800; font-size: 13px; letter-spacing: .04em; color: #07101e; background: var(--acc); border-radius: 999px; padding: 6px 16px; margin-bottom: 14px; }
+.diag-res__title { font-size: clamp(20px, 3vw, 26px); font-weight: 800; color: var(--text); margin: 0 0 12px; line-height: 1.4; }
+.diag-res__desc { font-size: 15px; line-height: 1.8; color: var(--muted); max-width: 36em; margin: 0 auto 26px; }
+.diag-res__desc b { color: var(--text); }
+.diag-res__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; }
+
+@media (max-width: 520px) {
+  .diag { min-height: 460px; padding: 22px 16px 26px; }
+  .diag-opt { font-size: 14px; padding: 12px 13px; }
+}
