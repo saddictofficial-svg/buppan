@@ -462,6 +462,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* セクション・スポットイラスト */
 .illus { display: block; width: 94px; height: 62px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; color: var(--acc); filter: drop-shadow(0 0 6px var(--acc-glow)); margin: 0 0 16px; }
 .sec-head--center .illus, .message-wrap .illus { margin-left: auto; margin-right: auto; }
+/* ピクセル・スポット絵 */
+.spot-illus { display: block; width: 120px; height: auto; image-rendering: pixelated; margin: 0 0 16px; filter: drop-shadow(0 0 8px var(--acc-glow)); }
+.sec-head--center .spot-illus, .message-wrap .spot-illus { margin-left: auto; margin-right: auto; }
+@media (max-width: 520px) { .spot-illus { width: 100px; } }
 
 /* 用語メモ（かんたん解説）— マーケ用語をその場で補足 */
 .glossary { margin-top: 28px; border: 1px solid var(--line); border-left: 3px solid var(--acc); background: rgba(12,18,38,.55); padding: 16px 20px; }
