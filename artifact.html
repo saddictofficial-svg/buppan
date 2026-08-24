@@ -468,6 +468,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* ヒーローのタグライン・キッカー（日本語なのでゴシックで少し大きめに） */
 .eyebrow--tagline { font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-size: 14px; font-weight: 700; letter-spacing: .04em; }
 
+/* セクション・スポットイラスト */
+.illus { display: block; width: 94px; height: 62px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; color: var(--acc); filter: drop-shadow(0 0 6px var(--acc-glow)); margin: 0 0 16px; }
+.sec-head--center .illus, .message-wrap .illus { margin-left: auto; margin-right: auto; }
+
 /* 用語メモ（かんたん解説）— マーケ用語をその場で補足 */
 .glossary { margin-top: 28px; border: 1px solid var(--line); border-left: 3px solid var(--acc); background: rgba(12,18,38,.55); padding: 16px 20px; }
 .glossary__label { font-family: "Press Start 2P", monospace; font-size: 9px; color: var(--acc); letter-spacing: .06em; margin: 0 0 12px; }
@@ -569,6 +573,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.6 6.4L20 11l-6.4 1.6L12 19l-1.6-6.4L4 11l6.4-1.6z"/></symbol>
         <symbol id="ic-check" viewBox="0 0 24 24"><polyline points="5,13 10,18 19,6"/></symbol>
         <symbol id="ic-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17.2" r="0.6" fill="currentColor" stroke="none"/></symbol>
+        <!-- セクション用スポットイラスト（ライン画） -->
+        <symbol id="il-who" viewBox="0 0 72 48"><rect x="4" y="6" width="64" height="36" rx="2"/><path d="M18 6V42 M32 6V42 M46 6V42 M60 6V42 M4 17H68 M4 28H68 M4 39H68" stroke-opacity="0.2"/><path d="M24 42V30h8V23h8V16h8v26"/><circle cx="48" cy="16" r="2" fill="currentColor" stroke="none"/></symbol>
+        <symbol id="il-results" viewBox="0 0 72 48"><line x1="6" y1="42" x2="66" y2="42"/><rect x="10" y="33" width="9" height="9"/><rect x="24" y="26" width="9" height="16"/><rect x="38" y="18" width="9" height="24"/><rect x="52" y="9" width="9" height="33"/><polyline points="10,29 24,23 38,15 60,6"/><polyline points="52,6 60,6 60,13"/></symbol>
+        <symbol id="il-why" viewBox="0 0 72 48"><path d="M36 4 L52 9 V24 C52 34 45 41 36 44 C27 41 20 34 20 24 V9 Z"/><polyline points="29,24 34,29 44,18"/><path d="M58 8 l1.2 3.2 l3.2 1.2 l-3.2 1.2 l-1.2 3.2 l-1.2 -3.2 l-3.2 -1.2 l3.2 -1.2 z" fill="currentColor" stroke="none"/></symbol>
+        <symbol id="il-message" viewBox="0 0 72 48"><path d="M8 8 h48 a4 4 0 0 1 4 4 v18 a4 4 0 0 1 -4 4 H26 l-9 7 v-7 H8 a4 4 0 0 1 -4 -4 V12 a4 4 0 0 1 4 -4 z"/><path d="M14 17 h30 M14 25 h22" stroke-opacity="0.85"/><path d="M64 12 l1.2 3.2 l3.2 1.2 l-3.2 1.2 l-1.2 3.2 l-1.2 -3.2 l-3.2 -1.2 l3.2 -1.2 z" fill="currentColor" stroke="none"/></symbol>
+        <symbol id="il-faq" viewBox="0 0 72 48"><path d="M18 8 h36 a4 4 0 0 1 4 4 v18 a4 4 0 0 1 -4 4 H36 l-9 7 v-7 H18 a4 4 0 0 1 -4 -4 V12 a4 4 0 0 1 4 -4 z"/><path d="M30 18 a6 6 0 0 1 11 3 c0 4 -5 4 -5 8"/><circle cx="36" cy="33" r="1" fill="currentColor" stroke="none"/></symbol>
       </defs>
     </svg>
 
@@ -662,6 +672,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <span class="ghost">01</span>
         <div class="container">
           <div class="sec-head reveal">
+            <svg class="illus" aria-hidden="true"><use href="#il-who"/></svg>
             <p class="eyebrow">01 / WHO WE ARE</p>
             <h2 class="sec-title">存在意義とチーム</h2>
           </div>
@@ -726,6 +737,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <span class="ghost ghost--center">03</span>
         <div class="container">
           <div class="sec-head sec-head--center reveal">
+            <svg class="illus" aria-hidden="true"><use href="#il-results"/></svg>
             <p class="eyebrow">03 / RESULTS</p>
             <h2 class="sec-title">数字で見る実績</h2>
             <p class="sec-desc"><span class="sample-note">※ 数値は現在イメージです（実データに差し替え予定）</span></p>
@@ -931,6 +943,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <span class="ghost">07</span>
         <div class="container why-wrap">
           <div class="why-aside reveal">
+            <svg class="illus" aria-hidden="true"><use href="#il-why"/></svg>
             <p class="eyebrow">07 / WHY BUPPAN</p>
             <h2 class="sec-title">選ばれる理由</h2>
             <p class="sec-desc">「面白い」を数字に変える、4つの約束。</p>
@@ -960,6 +973,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <section class="section section--glow" id="message" data-accent="pink">
         <span class="ghost ghost--center">08</span>
         <div class="container message-wrap reveal">
+          <svg class="illus" aria-hidden="true"><use href="#il-message"/></svg>
           <p class="eyebrow">08 / MESSAGE</p>
           <p class="message__big">「面白い」を、<br class="sp" />数字で証明する。</p>
           <p class="message__body">手段に縛られず、事業の成長そのものに向き合う。戦略から実行まで、ひとつのチームで伴走する。面白い事業を、ちゃんと大きくする——それがBUPPANの流儀です。</p>
@@ -974,6 +988,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <span class="ghost">09</span>
         <div class="container container--narrow">
           <div class="sec-head sec-head--center reveal">
+            <svg class="illus" aria-hidden="true"><use href="#il-faq"/></svg>
             <p class="eyebrow">09 / FAQ</p>
             <h2 class="sec-title">よくある質問</h2>
           </div>
