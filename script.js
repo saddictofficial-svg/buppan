@@ -402,7 +402,7 @@
   if (!video || !vcanvas || !city || reduceV) return;
   if (window.innerWidth <= 768) return; // モバイルはデータ節約でドット絵のまま
   var ctx = vcanvas.getContext("2d");
-  var PIXEL = 6, W = 0, H = 0, ready = false, raf, glitch = 0, glitchT = 90;
+  var PIXEL = 3, W = 0, H = 0, ready = false, raf, glitch = 0, glitchT = 90;
   function size() {
     var r = vcanvas.getBoundingClientRect();
     W = Math.max(80, Math.round(r.width / PIXEL));
@@ -411,9 +411,10 @@
   }
   function start() {
     if (ready) return;
-    ready = true; size();
+    ready = true;
     city.style.display = "none";
     vcanvas.style.display = "block";
+    size(); // 表示後に計測（0サイズ張り付き防止）
     raf = requestAnimationFrame(draw);
   }
   function draw() {
