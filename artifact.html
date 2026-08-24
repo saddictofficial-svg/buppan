@@ -1519,7 +1519,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   if (!video || !vcanvas || !city || reduceV) return;
   if (window.innerWidth <= 768) return; // モバイルはデータ節約でドット絵のまま
   var ctx = vcanvas.getContext("2d");
-  var PIXEL = 3, W = 0, H = 0, ready = false, raf, glitch = 0, glitchT = 90;
+  var PIXEL = 2, W = 0, H = 0, ready = false, raf, glitch = 0, glitchT = 90;
   function size() {
     var r = vcanvas.getBoundingClientRect();
     W = Math.max(80, Math.round(r.width / PIXEL));
