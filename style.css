@@ -235,8 +235,7 @@ a { color: inherit; text-decoration: none; }
 /* ===== シネマティックFV（カメラの動き＋光のドリフト） ===== */
 .hero__canvas { animation: heroKen 26s ease-in-out infinite alternate; transform-origin: center; }
 @keyframes heroKen { from { transform: scale(1.03); } to { transform: scale(1.09) translate(-1.6%, -1%); } }
-.fv-video-src { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; z-index: -1; }
-.hero__canvas--video { display: none; filter: saturate(1.35) contrast(1.06) brightness(.98); }
+.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; display: none; image-rendering: pixelated; animation: heroKen 26s ease-in-out infinite alternate; transform-origin: center; }
 .hero__cine { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(55% 45% at 28% 22%, rgba(34,211,238,.12), transparent 62%); animation: heroCine 16s ease-in-out infinite alternate; }
 @keyframes heroCine { from { transform: translate(-6%, -4%); opacity: .7; } to { transform: translate(14%, 8%); opacity: 1; } }
 

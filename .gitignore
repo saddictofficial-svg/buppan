@@ -15,3 +15,6 @@ BUPPAN事業部組織図.png
 # ビルドの中間物
 pressstart.woff2
 .vercel
+
+# 動画の元素材（再加工用にローカル保持・本番はmm_fx.mp4）
+assets/mm.mp4

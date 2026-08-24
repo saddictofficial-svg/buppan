@@ -244,8 +244,7 @@ a { color: inherit; text-decoration: none; }
 /* ===== シネマティックFV（カメラの動き＋光のドリフト） ===== */
 .hero__canvas { animation: heroKen 26s ease-in-out infinite alternate; transform-origin: center; }
 @keyframes heroKen { from { transform: scale(1.03); } to { transform: scale(1.09) translate(-1.6%, -1%); } }
-.fv-video-src { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; z-index: -1; }
-.hero__canvas--video { display: none; filter: saturate(1.35) contrast(1.06) brightness(.98); }
+.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; display: none; image-rendering: pixelated; animation: heroKen 26s ease-in-out infinite alternate; transform-origin: center; }
 .hero__cine { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(55% 45% at 28% 22%, rgba(34,211,238,.12), transparent 62%); animation: heroCine 16s ease-in-out infinite alternate; }
 @keyframes heroCine { from { transform: translate(-6%, -4%); opacity: .7; } to { transform: translate(14%, 8%); opacity: 1; } }
 
@@ -643,8 +642,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <!-- ======================= FV ======================= -->
       <section class="hero">
         <canvas class="hero__canvas" id="cityCanvas" aria-label="みなとみらいの夜景をドット絵で表現したイメージ"></canvas>
-        <video id="fvVideo" class="fv-video-src" muted loop playsinline autoplay preload="auto" aria-hidden="true"><source src="assets/mm.mp4" type="video/mp4"></video>
-        <canvas class="hero__canvas hero__canvas--video" id="fvVideoCanvas" aria-hidden="true"></canvas>
+        <video id="fvVideo" class="hero__video" muted loop playsinline autoplay preload="auto" aria-hidden="true"><source src="assets/mm_fx.mp4" type="video/mp4"></video>
         <div class="hero__cine" aria-hidden="true"></div>
         <div class="hero__scrim" aria-hidden="true"></div>
         <div class="container hero__inner">
@@ -1510,58 +1508,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   }
 })();
 
-/* ===== 実写ムービーFV（ドット絵化＋ネオン＋グリッチ）※PC・素材ありのみ ===== */
+/* ===== 実写ムービーFV（加工焼き込み済み動画を背景再生）※PC・本番のみ ===== */
 (function () {
   var reduceV = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var video = document.getElementById("fvVideo");
-  var vcanvas = document.getElementById("fvVideoCanvas");
   var city = document.getElementById("cityCanvas");
-  if (!video || !vcanvas || !city || reduceV) return;
+  if (!video || !city || reduceV) return;
   if (window.innerWidth <= 768) return; // モバイルはデータ節約でドット絵のまま
-  var ctx = vcanvas.getContext("2d");
-  var PIXEL = 2, W = 0, H = 0, ready = false, raf, glitch = 0, glitchT = 90;
-  function size() {
-    var r = vcanvas.getBoundingClientRect();
-    W = Math.max(80, Math.round(r.width / PIXEL));
-    H = Math.max(60, Math.round(r.height / PIXEL));
-    vcanvas.width = W; vcanvas.height = H;
-  }
-  function start() {
-    if (ready) return;
-    ready = true;
-    city.style.display = "none";
-    vcanvas.style.display = "block";
-    size(); // 表示後に計測（0サイズ張り付き防止）
-    raf = requestAnimationFrame(draw);
-  }
-  function draw() {
-    if (video.readyState >= 2 && video.videoWidth) {
-      var vw = video.videoWidth, vh = video.videoHeight;
-      var s = Math.max(W / vw, H / vh), dw = vw * s, dh = vh * s;
-      ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(video, (W - dw) / 2, (H - dh) / 2, dw, dh);
-      // ネオングレード
-      ctx.globalCompositeOperation = "overlay";
-      ctx.fillStyle = "rgba(34,211,238,0.12)"; ctx.fillRect(0, 0, W, H);
-      ctx.globalCompositeOperation = "source-over";
-      // 地平線の残光
-      ctx.fillStyle = "rgba(255,45,149,0.08)"; ctx.fillRect(0, Math.floor(H * 0.7), W, Math.ceil(H * 0.3));
-      // グリッチ（時々、横スライスをずらす）
-      glitchT--;
-      if (glitchT < 0) { glitch = 5; glitchT = Math.floor(80 + Math.random() * 160); }
-      if (glitch > 0) {
-        var y = (Math.random() * (H - 6)) | 0, hh = (2 + Math.random() * 4) | 0, off = ((Math.random() * 10) - 5) | 0;
-        try { var im = ctx.getImageData(0, y, W, hh); ctx.putImageData(im, off, y); } catch (e) {}
-        glitch--;
-      }
-    }
-    raf = requestAnimationFrame(draw);
-  }
-  video.addEventListener("playing", start);
-  video.addEventListener("canplay", function () { video.play().then(start).catch(function () {}); });
-  video.play().then(start).catch(function () { /* 自動再生不可→ドット絵のまま */ });
-  var rz;
-  window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(function () { if (ready) size(); }, 200); });
+  function show() { city.style.display = "none"; video.style.display = "block"; }
+  video.addEventListener("playing", show);
+  video.addEventListener("canplay", function () { video.play().then(show).catch(function () {}); });
+  video.play().then(show).catch(function () { /* 自動再生不可→ドット絵のまま */ });
 })();
 
 </script>
