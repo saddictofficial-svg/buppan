@@ -627,3 +627,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .work__body h3 { font-size: 18px; line-height: 1.45; }
 .work__body p { font-size: 13px; line-height: 1.7; }
 @media (max-width: 520px) { .work__metric { font-size: 38px; padding-right: 44px; } .work__ico { width: 36px; height: 36px; } }
+
+/* ===== 公式ロゴ（ヘッダー/フッター） ===== */
+.logo__img { height: 30px; width: auto; display: block; filter: drop-shadow(0 0 8px rgba(255,255,255,.18)); }
+.footer__brand .logo__img { height: 40px; }
+@media (max-width: 520px) { .logo__img { height: 26px; } }
