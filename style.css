@@ -616,3 +616,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .diag { min-height: 460px; padding: 22px 16px 26px; }
   .diag-opt { font-size: 14px; padding: 12px 13px; }
 }
+
+/* ===== 支援実績カード：ピクトグラム＋文字の抑揚 ===== */
+.work__thumb { position: relative; }
+.work__ico { position: absolute; top: 15px; right: 15px; width: 42px; height: 42px; color: var(--acc); opacity: .92; }
+.work__cat { font-size: 9px; }
+.work__metric { font-size: clamp(36px, 6.4vw, 46px); font-weight: 700; line-height: 1; margin-top: 12px; padding-right: 48px; }
+.work__metric small { font-size: 16px; font-weight: 400; margin-left: 5px; opacity: .85; }
+.work__metric span { font-size: 13px; color: #c2cfec; line-height: 1.7; margin-top: 12px; padding-top: 11px; border-top: 1px dashed var(--line); }
+.work__body h3 { font-size: 18px; line-height: 1.45; }
+.work__body p { font-size: 13px; line-height: 1.7; }
+@media (max-width: 520px) { .work__metric { font-size: 38px; padding-right: 44px; } .work__ico { width: 36px; height: 36px; } }

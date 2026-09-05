@@ -627,6 +627,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .diag-opt { font-size: 14px; padding: 12px 13px; }
 }
 
+/* ===== 支援実績カード：ピクトグラム＋文字の抑揚 ===== */
+.work__thumb { position: relative; }
+.work__ico { position: absolute; top: 15px; right: 15px; width: 42px; height: 42px; color: var(--acc); opacity: .92; }
+.work__cat { font-size: 9px; }
+.work__metric { font-size: clamp(36px, 6.4vw, 46px); font-weight: 700; line-height: 1; margin-top: 12px; padding-right: 48px; }
+.work__metric small { font-size: 16px; font-weight: 400; margin-left: 5px; opacity: .85; }
+.work__metric span { font-size: 13px; color: #c2cfec; line-height: 1.7; margin-top: 12px; padding-top: 11px; border-top: 1px dashed var(--line); }
+.work__body h3 { font-size: 18px; line-height: 1.45; }
+.work__body p { font-size: 13px; line-height: 1.7; }
+@media (max-width: 520px) { .work__metric { font-size: 38px; padding-right: 44px; } .work__ico { width: 36px; height: 36px; } }
+
 </style>
     <!-- 起動演出（BOOTムービー） -->
     <div class="boot" id="boot" aria-hidden="true">
@@ -658,6 +669,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <symbol id="il-why" viewBox="0 0 72 48"><path d="M36 4 L52 9 V24 C52 34 45 41 36 44 C27 41 20 34 20 24 V9 Z"/><polyline points="29,24 34,29 44,18"/><path d="M58 8 l1.2 3.2 l3.2 1.2 l-3.2 1.2 l-1.2 3.2 l-1.2 -3.2 l-3.2 -1.2 l3.2 -1.2 z" fill="currentColor" stroke="none"/></symbol>
         <symbol id="il-message" viewBox="0 0 72 48"><path d="M8 8 h48 a4 4 0 0 1 4 4 v18 a4 4 0 0 1 -4 4 H26 l-9 7 v-7 H8 a4 4 0 0 1 -4 -4 V12 a4 4 0 0 1 4 -4 z"/><path d="M14 17 h30 M14 25 h22" stroke-opacity="0.85"/><path d="M64 12 l1.2 3.2 l3.2 1.2 l-3.2 1.2 l-1.2 3.2 l-1.2 -3.2 l-3.2 -1.2 l3.2 -1.2 z" fill="currentColor" stroke="none"/></symbol>
         <symbol id="il-faq" viewBox="0 0 72 48"><path d="M18 8 h36 a4 4 0 0 1 4 4 v18 a4 4 0 0 1 -4 4 H36 l-9 7 v-7 H18 a4 4 0 0 1 -4 -4 V12 a4 4 0 0 1 4 -4 z"/><path d="M30 18 a6 6 0 0 1 11 3 c0 4 -5 4 -5 8"/><circle cx="36" cy="33" r="1" fill="currentColor" stroke="none"/></symbol>
+        <!-- 支援実績カード用ピクトグラム -->
+        <symbol id="ic-w-sns" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M12 13.4c-1.4-1-3.2-2.1-3.2-3.7 0-1.9 2.4-2.4 3.2-.7.8-1.7 3.2-1.2 3.2.7 0 1.6-1.8 2.7-3.2 3.7z" fill="currentColor" stroke="none"/></symbol>
+        <symbol id="ic-w-ad" viewBox="0 0 24 24"><path d="M3 10v4h3l8 4V6l-8 4H3z"/><path d="M17.5 9a4.2 4.2 0 0 1 0 6"/><path d="M20 7a7.5 7.5 0 0 1 0 10"/></symbol>
+        <symbol id="ic-w-cart" viewBox="0 0 24 24"><path d="M2.5 4h2.2l2.1 9.6a1 1 0 0 0 1 .8h8.3a1 1 0 0 0 1-.78L19.8 7.5H6"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/><path d="M14 4l2.5 2.5L14 9" stroke-opacity="0.9"/></symbol>
+        <symbol id="ic-w-growth" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M6 20v-4"/><path d="M11 20v-7"/><path d="M16 20v-10"/><path d="M4 12l5-4 4 2 7-6"/><path d="M17 4h4v4"/></symbol>
+        <symbol id="ic-w-team" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.3"/><path d="M15 15.4c2.4-.7 5.5.7 5.5 3.6"/></symbol>
+        <symbol id="ic-w-funnel" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v5l-4 2v-7z"/><path d="M14.5 19.5l1.8 1.8L20 17.5"/></symbol>
       </defs>
     </svg>
 
@@ -862,7 +880,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
           </div>
           <div class="grid grid-2">
             <article class="work reveal" data-accent="cyan">
-              <div class="work__thumb"><span class="work__cat">飲食・SNS運用</span><div class="work__metric">40,000<small>フォロワー</small><span>Instagram起点で食べログ1位・1ブランド4店舗に拡大</span></div></div>
+              <div class="work__thumb"><svg class="ic work__ico" aria-hidden="true"><use href="#ic-w-sns"/></svg><span class="work__cat">飲食・SNS運用</span><div class="work__metric">40,000<small>フォロワー</small><span>Instagram起点で食べログ1位・1ブランド4店舗に拡大</span></div></div>
               <div class="work__body">
                 <h3>SNS起点で4店舗に成長した飲食ブランド</h3>
                 <p>新規オープンで認知ゼロの状態から、SNSで世界観と来店体験を発信。広告と口コミの両輪で集客基盤を築いた。</p>
@@ -875,7 +893,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               </div>
             </article>
             <article class="work reveal" data-accent="lime">
-              <div class="work__thumb"><span class="work__cat">空調設備・広告運用</span><div class="work__metric">757<small>万円/月</small><span>月7万円→757万円に拡大。直近1年で反響11,000件超</span></div></div>
+              <div class="work__thumb"><svg class="ic work__ico" aria-hidden="true"><use href="#ic-w-ad"/></svg><span class="work__cat">空調設備・広告運用</span><div class="work__metric">757<small>万円/月</small><span>月7万円→757万円に拡大。直近1年で反響11,000件超</span></div></div>
               <div class="work__body">
                 <h3>広告費を月7万→757万円に育てた空調設備会社</h3>
                 <p>社内にノウハウがない状態から、運用代行と内製化支援を両立。4年以上伴走し、成果に応じて広告投資を段階的に拡大。</p>
@@ -888,7 +906,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               </div>
             </article>
             <article class="work reveal" data-accent="pink">
-              <div class="work__thumb"><span class="work__cat">食品EC・広告最適化</span><div class="work__metric">144<small>万円削減</small><span>獲得単価も約20%改善／予算は増やさず効率UP</span></div></div>
+              <div class="work__thumb"><svg class="ic work__ico" aria-hidden="true"><use href="#ic-w-cart"/></svg><span class="work__cat">食品EC・広告最適化</span><div class="work__metric">144<small>万円削減</small><span>獲得単価も約20%改善／予算は増やさず効率UP</span></div></div>
               <div class="work__body">
                 <h3>広告費を最適化した高級茶葉のEC</h3>
                 <p>どの広告が効いているかを可視化し、成果の低い広告を整理。予算を増やさず、投資効率だけを引き上げた。</p>
@@ -901,7 +919,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               </div>
             </article>
             <article class="work reveal" data-accent="amber">
-              <div class="work__thumb"><span class="work__cat">広告運用・グロース</span><div class="work__metric">52<small>倍</small><span>月25万→1,300万円に拡大しROAS400〜660%を維持</span></div></div>
+              <div class="work__thumb"><svg class="ic work__ico" aria-hidden="true"><use href="#ic-w-growth"/></svg><span class="work__cat">広告運用・グロース</span><div class="work__metric">52<small>倍</small><span>月25万→1,300万円に拡大しROAS400〜660%を維持</span></div></div>
               <div class="work__body">
                 <h3>広告を52倍に拡大した事業グロース支援</h3>
                 <p>費用対効果を見ながら広告費を段階的に拡大。利益の出る領域へ投資を集中し、広告を成長のエンジンにした。</p>
@@ -914,7 +932,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               </div>
             </article>
             <article class="work reveal" data-accent="cyan">
-              <div class="work__thumb"><span class="work__cat">福利厚生サービス・事業立上〜売却</span><div class="work__metric">200<small>社導入</small><span>0→1で立ち上げ、1年で200社→最終300社規模。約2年半で事業売却（EXIT）</span></div></div>
+              <div class="work__thumb"><svg class="ic work__ico" aria-hidden="true"><use href="#ic-w-team"/></svg><span class="work__cat">福利厚生サービス・事業立上〜売却</span><div class="work__metric">200<small>社導入</small><span>0→1で立ち上げ、1年で200社→最終300社規模。約2年半で事業売却（EXIT）</span></div></div>
               <div class="work__body">
                 <h3>0→1で立ち上げ、2年半でEXITした福利厚生サービス</h3>
                 <p>市場調査からサービス設計、チーム組成・教育、営業、導入後のオンボーディングまで一貫して伴走。提供企業・利用者・自社が“三方よし”になる仕組みをつくり、事業売却（EXIT）まで導いた。</p>
@@ -927,7 +945,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               </div>
             </article>
             <article class="work reveal" data-accent="lime">
-              <div class="work__thumb"><span class="work__cat">大手家電量販店EC・WEBコンサル</span><div class="work__metric">150<small>% CVR向上</small><span>行動分析で購入導線を最適化。売上は約1.5倍、広告費は約20%削減し、売上規模は億単位で上昇</span></div></div>
+              <div class="work__thumb"><svg class="ic work__ico" aria-hidden="true"><use href="#ic-w-funnel"/></svg><span class="work__cat">大手家電量販店EC・WEBコンサル</span><div class="work__metric">150<small>% CVR向上</small><span>行動分析で購入導線を最適化。売上は約1.5倍、広告費は約20%削減し、売上規模は億単位で上昇</span></div></div>
               <div class="work__body">
                 <h3>全ユーザーの行動分析でCVRを大幅改善した家電量販店EC</h3>
                 <p>広告・流入チャネルからサイト回遊・購入導線までを徹底分析。ECの強み・弱みを洗い出し、必要なコンテンツ追加とページ改善でCVRを引き上げ、売上と広告効率を同時に改善した。</p>
