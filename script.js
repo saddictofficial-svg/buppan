@@ -393,13 +393,13 @@
   }
 })();
 
-/* ===== 実写ムービーFV（加工焼き込み済み動画を背景再生）※PC・本番のみ ===== */
+/* ===== 実写ムービーFV（加工焼き込み済み動画を背景再生）※PC・スマホ共通 ===== */
 (function () {
   var reduceV = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var video = document.getElementById("fvVideo");
   var city = document.getElementById("cityCanvas");
   if (!video || !city || reduceV) return;
-  if (window.innerWidth <= 768) return; // モバイルはデータ節約でドット絵のまま
+  // スマホでも実写動画に統一。自動再生不可の場合のみドット絵にフォールバック。
 
   // 9:00〜16:00は昼景、それ以外は夜景。昼素材が無ければ夜景へフォールバック。
   var NIGHT = "assets/mm_fx.mp4", DAY = "assets/mm_day_fx.mp4";
@@ -408,11 +408,13 @@
   var srcEl = video.querySelector("source");
   var triedNight = false;
 
-  function show() { city.style.display = "none"; video.style.display = "block"; }
+  // 動画は常時表示（背面z:0）。再生できたら前面のドット絵を隠して動画を見せる。
+  function show() { city.style.display = "none"; }
   function load(src) {
     if (srcEl) srcEl.src = src; else video.src = src;
     video.load();
-    video.play().then(show).catch(function () {});
+    var p = video.play();
+    if (p && p.then) p.then(show).catch(function () {});
   }
   video.addEventListener("playing", show);
   video.addEventListener("canplay", function () { video.play().then(show).catch(function () {}); });
