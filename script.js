@@ -424,11 +424,12 @@
   load(daytime ? DAY : NIGHT);
 })();
 
-/* ===== FV演出レイヤー（花火・流れ星・UFO／ドット絵・全環境） ===== */
+/* ===== FV演出レイヤー（花火・流れ星・UFO／ドット絵・PCのみ） ===== */
 (function () {
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fx = document.getElementById("fvFx");
   if (!fx) return;
+  if (window.innerWidth <= 768) { fx.style.display = "none"; return; } // SPは演出なし（負荷軽減）
   var ctx = fx.getContext("2d");
   var SCALE = 5, W = 0, H = 0;
   var COLORS = ["#22d3ee", "#c6f542", "#ff2d95", "#ffb300", "#eaf0ff"];

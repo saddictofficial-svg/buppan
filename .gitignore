@@ -24,3 +24,6 @@ assets/mm_day.mp4
 
 # 納品物（サービス資料/パンフレット）はローカル保持
 deliverables/
+
+# FV静止画の元画像（最適化後はfv_pixel.jpgを使用）
+assets/fv_src.png
