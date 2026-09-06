@@ -27,3 +27,6 @@ deliverables/
 
 # FV静止画の元画像（最適化後はfv_pixel.jpgを使用）
 assets/fv_src.png
+
+# FV静止画（最適化JPG）は配信する
+!assets/fv_pixel.jpg
