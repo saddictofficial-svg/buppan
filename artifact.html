@@ -515,6 +515,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* 用語メモ（かんたん解説）— マーケ用語をその場で補足 */
 .glossary { margin-top: 28px; border: 1px solid var(--line); border-left: 3px solid var(--acc); background: rgba(12,18,38,.55); padding: 16px 20px; }
 .glossary__label { font-family: "Share Tech Mono", monospace; font-size: 9px; color: var(--acc); letter-spacing: .06em; margin: 0 0 12px; }
+/* 用語メモ：プルダウン（最初だけopen） */
+details.glossary > summary { cursor: pointer; list-style: none; display: flex; align-items: center; margin: 0; }
+details.glossary > summary::-webkit-details-marker { display: none; }
+details.glossary > summary::after { content: "＋ ひらく"; margin-left: auto; color: var(--acc); font-family: "Share Tech Mono", monospace; font-size: 9px; opacity: .85; }
+details.glossary[open] > summary { margin-bottom: 12px; }
+details.glossary[open] > summary::after { content: "− とじる"; }
+details.glossary > summary:hover::after { opacity: 1; text-shadow: 0 0 8px var(--acc-glow, rgba(34,211,238,.6)); }
 .glossary dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px; }
 .glossary__item { font-size: 12.5px; line-height: 1.65; }
 .glossary__item dt { display: inline; font-weight: 700; color: var(--text); }
@@ -660,6 +667,26 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .footer__brand .logo__img { height: 40px; }
 @media (max-width: 520px) { .logo__img { height: 26px; } }
 
+/* ===== 図・グラフ（インラインSVG・ネオン配色） ===== */
+.figure { margin: 34px auto 0; max-width: 920px; background: rgba(12,18,38,.72); border: 1px solid var(--line); border-radius: 12px; padding: 24px 26px 20px; }
+.figure svg { display: block; width: 100%; height: auto; }
+.figure__cap { font-size: 12.5px; color: var(--muted); margin-top: 14px; text-align: center; line-height: 1.7; }
+.figure__cap b { color: var(--acc); }
+.figure__ttl { font-family: "Share Tech Mono", monospace; font-size: 11px; letter-spacing: .08em; color: var(--acc); margin-bottom: 14px; }
+
+/* 一気通貫フロー */
+.flowfig { margin: 30px auto 0; max-width: 980px; }
+.flowfig svg { display: block; width: 100%; height: auto; }
+
+/* WORKSカード内ミニグラフ */
+.work__chart { margin: 14px 0 2px; padding-top: 13px; border-top: 1px dashed var(--line); }
+.work__chart svg { display: block; width: 100%; height: auto; }
+.work__chart .cap { font-size: 10.5px; color: var(--muted); margin-top: 7px; letter-spacing: .02em; }
+
+@media (max-width: 520px) {
+  .figure { padding: 18px 16px 16px; }
+}
+
 </style>
     <!-- 起動演出（BOOTムービー） -->
     <div class="boot" id="boot" aria-hidden="true">
@@ -782,6 +809,26 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
             <div class="pain reveal"><svg class="ic" aria-hidden="true"><use href="#ic-alert"/></svg><p>施策が場当たり的で、<b>成果に再現性がない</b></p></div>
             <div class="pain reveal"><svg class="ic" aria-hidden="true"><use href="#ic-alert"/></svg><p>戦略は描けても、<b>現場で実行しきれない</b></p></div>
           </div>
+          <div class="figure reveal">
+            <div class="figure__ttl">WHY IT STALLS ─ 施策を増やしても伸び悩む構造</div>
+            <svg viewBox="0 0 820 320" role="img" aria-label="施策・コストは増え続けるが、事業成長は頭打ちになることを示す折れ線グラフ">
+              <line x1="70" y1="30" x2="70" y2="270" stroke="#22345f" stroke-width="1.5"/>
+              <line x1="70" y1="270" x2="770" y2="270" stroke="#22345f" stroke-width="1.5"/>
+              <text x="70" y="298" fill="#8ea3c8" font-size="14" font-family="'Share Tech Mono',monospace">施策量・投下コスト（時間の経過）→</text>
+              <!-- 施策・コスト（右肩上がり） -->
+              <polyline points="70,258 210,210 350,158 500,100 690,44" fill="none" stroke="#ff2d95" stroke-width="4"/>
+              <circle cx="690" cy="44" r="5" fill="#ff2d95"/>
+              <text x="560" y="34" fill="#ff2d95" font-size="15" font-weight="700">施策量・コスト</text>
+              <!-- 事業成長（頭打ち） -->
+              <polyline points="70,252 210,205 350,178 500,168 690,164" fill="none" stroke="#22d3ee" stroke-width="4"/>
+              <circle cx="690" cy="164" r="5" fill="#22d3ee"/>
+              <text x="556" y="152" fill="#22d3ee" font-size="15" font-weight="700">事業の成長</text>
+              <!-- GAP -->
+              <line x1="690" y1="52" x2="690" y2="156" stroke="#8ea3c8" stroke-width="1.4" stroke-dasharray="5 5"/>
+              <text x="704" y="112" fill="#c6f542" font-size="14" font-weight="700" font-family="'Share Tech Mono',monospace">GAP</text>
+            </svg>
+            <p class="figure__cap">“やること”を増やすほどコストは膨らむのに、成長は頭打ち。<b>戦略・実行・改善の分断</b>が、この差（GAP）を生みます。</p>
+          </div>
           <p class="pain-bridge reveal">ひとつでも当てはまるなら——<br class="sp" />BUPPANが<strong>事業そのものから設計</strong>し、数字に変えます。</p>
         </div>
       </section>
@@ -809,6 +856,36 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <li><span class="who__ico"><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg></span><div><b>成果主義</b>アウトプットではなく、事業成果（数字）にコミットする。</div></li>
             </ul>
           </div>
+          <div class="figure reveal">
+            <div class="figure__ttl">BUPPAN GROWTH LOOP ─ 分断させず、ひとつの環で回す</div>
+            <svg viewBox="0 0 900 250" role="img" aria-label="戦略設計・実行運用・計測・改善が循環する成長ループの図">
+              <defs><marker id="loopArrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8ea3c8"/></marker>
+              <marker id="loopArrowCy" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22d3ee"/></marker></defs>
+              <!-- 4ステップ -->
+              <g font-family="'Hiragino Kaku Gothic ProN',sans-serif">
+                <rect x="24" y="86" width="176" height="86" rx="8" fill="#0c1226" stroke="#22d3ee" stroke-width="2"/>
+                <text x="112" y="122" fill="#eaf0ff" font-size="17" font-weight="800" text-anchor="middle">① 戦略設計</text>
+                <text x="112" y="146" fill="#8ea3c8" font-size="12" text-anchor="middle">勝ち筋・KPI</text>
+                <rect x="248" y="86" width="176" height="86" rx="8" fill="#0c1226" stroke="#c6f542" stroke-width="2"/>
+                <text x="336" y="122" fill="#eaf0ff" font-size="17" font-weight="800" text-anchor="middle">② 実行・運用</text>
+                <text x="336" y="146" fill="#8ea3c8" font-size="12" text-anchor="middle">広告・制作・開発</text>
+                <rect x="472" y="86" width="176" height="86" rx="8" fill="#0c1226" stroke="#ff2d95" stroke-width="2"/>
+                <text x="560" y="122" fill="#eaf0ff" font-size="17" font-weight="800" text-anchor="middle">③ 計測</text>
+                <text x="560" y="146" fill="#8ea3c8" font-size="12" text-anchor="middle">KPI・ROASで可視化</text>
+                <rect x="696" y="86" width="176" height="86" rx="8" fill="#0c1226" stroke="#ffb300" stroke-width="2"/>
+                <text x="784" y="122" fill="#eaf0ff" font-size="17" font-weight="800" text-anchor="middle">④ 改善</text>
+                <text x="784" y="146" fill="#8ea3c8" font-size="12" text-anchor="middle">戦略へ還元</text>
+              </g>
+              <!-- 横矢印 -->
+              <line x1="204" y1="129" x2="242" y2="129" stroke="#8ea3c8" stroke-width="2.5" marker-end="url(#loopArrow)"/>
+              <line x1="428" y1="129" x2="466" y2="129" stroke="#8ea3c8" stroke-width="2.5" marker-end="url(#loopArrow)"/>
+              <line x1="652" y1="129" x2="690" y2="129" stroke="#8ea3c8" stroke-width="2.5" marker-end="url(#loopArrow)"/>
+              <!-- 戻り矢印（改善→戦略・ループ） -->
+              <path d="M784 86 C784 34 760 24 700 24 L196 24 C136 24 112 34 112 86" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#loopArrowCy)"/>
+              <text x="448" y="18" fill="#22d3ee" font-size="13" font-weight="700" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN',sans-serif">回すほど精度が上がる（再現性のある成長）</text>
+            </svg>
+            <p class="figure__cap">戦略・実行・改善を<b>同じチーム</b>が一気通貫で担当。数字を戦略に還し、ループを回すたびに成長の再現性が高まります。</p>
+          </div>
         </div>
       </section>
 
@@ -829,10 +906,39 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
             <article class="card card--lime reveal"><div class="card__no"><svg class="ic" aria-hidden="true"><use href="#ic-trend"/></svg></div><h3>グロース</h3><p>マーケとデータで、成長を仕組み化する。</p><ul class="card__ex"><li>広告・SEO・SNS運用</li><li>CRM・LTV・リピート改善</li><li>データ分析・ダッシュボード</li></ul><span class="tag">GROWTH</span></article>
             <article class="card card--amber reveal"><div class="card__no"><svg class="ic" aria-hidden="true"><use href="#ic-sparkle"/></svg></div><h3>ブランディング</h3><p>らしさを、選ばれ続ける体験に変える。</p><ul class="card__ex"><li>ブランド設計・言語化</li><li>VI・トーン＆マナー</li><li>LP・クリエイティブ制作</li></ul><span class="tag">BRANDING</span></article>
           </div>
+          <div class="figure reveal">
+            <div class="figure__ttl">ONE TEAM ─ 4領域を分断させず、ひとつの流れで</div>
+            <svg viewBox="0 0 1000 130" role="img" aria-label="事業戦略・事業開発・グロース・ブランディングが一本の流れでつながり事業成長に至る図">
+              <defs><marker id="fArrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8ea3c8"/></marker></defs>
+              <g font-family="'Hiragino Kaku Gothic ProN',sans-serif" text-anchor="middle">
+                <rect x="6" y="38" width="150" height="60" rx="8" fill="#0c1226" stroke="#22d3ee" stroke-width="2"/>
+                <text x="81" y="64" fill="#22d3ee" font-size="10" font-family="'Share Tech Mono',monospace">01 STRATEGY</text>
+                <text x="81" y="84" fill="#eaf0ff" font-size="15" font-weight="800">事業戦略</text>
+                <rect x="186" y="38" width="150" height="60" rx="8" fill="#0c1226" stroke="#ff2d95" stroke-width="2"/>
+                <text x="261" y="64" fill="#ff2d95" font-size="10" font-family="'Share Tech Mono',monospace">02 DEVELOP</text>
+                <text x="261" y="84" fill="#eaf0ff" font-size="15" font-weight="800">事業開発</text>
+                <rect x="366" y="38" width="150" height="60" rx="8" fill="#0c1226" stroke="#c6f542" stroke-width="2"/>
+                <text x="441" y="64" fill="#c6f542" font-size="10" font-family="'Share Tech Mono',monospace">03 GROWTH</text>
+                <text x="441" y="84" fill="#eaf0ff" font-size="15" font-weight="800">グロース</text>
+                <rect x="546" y="38" width="150" height="60" rx="8" fill="#0c1226" stroke="#ffb300" stroke-width="2"/>
+                <text x="621" y="64" fill="#ffb300" font-size="10" font-family="'Share Tech Mono',monospace">04 BRANDING</text>
+                <text x="621" y="84" fill="#eaf0ff" font-size="15" font-weight="800">ブランディング</text>
+                <!-- 事業成長 -->
+                <rect x="784" y="30" width="210" height="76" rx="10" fill="rgba(198,245,66,.12)" stroke="#c6f542" stroke-width="2.5"/>
+                <text x="889" y="60" fill="#c6f542" font-size="10" font-family="'Share Tech Mono',monospace">RESULT</text>
+                <text x="889" y="84" fill="#eaf0ff" font-size="18" font-weight="900">事業成長</text>
+              </g>
+              <line x1="160" y1="68" x2="182" y2="68" stroke="#8ea3c8" stroke-width="2.5" marker-end="url(#fArrow)"/>
+              <line x1="340" y1="68" x2="362" y2="68" stroke="#8ea3c8" stroke-width="2.5" marker-end="url(#fArrow)"/>
+              <line x1="520" y1="68" x2="542" y2="68" stroke="#8ea3c8" stroke-width="2.5" marker-end="url(#fArrow)"/>
+              <line x1="700" y1="68" x2="780" y2="68" stroke="#c6f542" stroke-width="3" marker-end="url(#fArrow)"/>
+            </svg>
+            <p class="figure__cap">それぞれを別会社に発注すると生まれる“分断”を、BUPPANは<b>ワンチーム</b>で一本化。戦略から成果まで途切れさせません。</p>
+          </div>
         </div>
         <div class="container">
-          <div class="glossary reveal">
-            <p class="glossary__label">用語メモ｜かんたん解説</p>
+          <details class="glossary reveal" open>
+            <summary class="glossary__label">用語メモ｜かんたん解説</summary>
             <dl>
               <div class="glossary__item"><dt>グロース</dt><dd>事業やサービスを継続的に伸ばしていく取り組み</dd></div>
               <div class="glossary__item"><dt>3C分析</dt><dd>お客様・競合・自社の3つを整理し、勝ち筋を見つける方法</dd></div>
@@ -846,7 +952,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="glossary__item"><dt>トーン＆マナー</dt><dd>言葉づかいや雰囲気を統一するルール</dd></div>
               <div class="glossary__item"><dt>LP</dt><dd>商品・サービスを1ページで紹介する専用ページ</dd></div>
             </dl>
-          </div>
+          </details>
         </div>
       </section>
 
@@ -902,6 +1008,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="work__body">
                 <h3>SNS起点で4店舗に成長した飲食ブランド</h3>
                 <p>新規オープンで認知ゼロの状態から、SNSで世界観と来店体験を発信。広告と口コミの両輪で集客基盤を築いた。</p>
+                <div class="work__chart"><svg viewBox="0 0 300 88" role="img" aria-hidden="true"><line x1="6" y1="74" x2="294" y2="74" stroke="#22345f" stroke-width="1.5"/><rect x="30" y="56" width="42" height="18" fill="#22d3ee" opacity="0.45"/><rect x="98" y="44" width="42" height="30" fill="#22d3ee" opacity="0.6"/><rect x="166" y="30" width="42" height="44" fill="#22d3ee" opacity="0.78"/><rect x="234" y="14" width="42" height="60" fill="#22d3ee"/><text x="51" y="86" fill="#8ea3c8" font-size="11" text-anchor="middle">1店</text><text x="119" y="86" fill="#8ea3c8" font-size="11" text-anchor="middle">2店</text><text x="187" y="86" fill="#8ea3c8" font-size="11" text-anchor="middle">3店</text><text x="255" y="86" fill="#22d3ee" font-size="11" text-anchor="middle" font-weight="700">4店</text></svg><div class="cap">店舗数：1 → <b>4店舗</b>に拡大（Instagram 4万フォロワー）</div></div>
                 <details class="work__more">
                   <summary>課題・施策・結果を見る</summary>
                   <p><b>課題</b>／新規ブランドで認知が低く、継続来店につながる集客基盤がなかった。</p>
@@ -915,6 +1022,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="work__body">
                 <h3>広告費を月7万→757万円に育てた空調設備会社</h3>
                 <p>社内にノウハウがない状態から、運用代行と内製化支援を両立。4年以上伴走し、成果に応じて広告投資を段階的に拡大。</p>
+                <div class="work__chart"><svg viewBox="0 0 300 88" role="img" aria-hidden="true"><line x1="6" y1="74" x2="294" y2="74" stroke="#22345f" stroke-width="1.5"/><polyline points="14,70 90,64 170,42 258,12" fill="none" stroke="#c6f542" stroke-width="3.5"/><circle cx="14" cy="70" r="4" fill="#c6f542"/><circle cx="258" cy="12" r="5" fill="#c6f542"/><text x="10" y="64" fill="#8ea3c8" font-size="11">7万</text><text x="286" y="24" fill="#c6f542" font-size="13" font-weight="700" text-anchor="end">757万</text></svg><div class="cap">月広告費：<b>7万 → 757万円</b>／反響11,000件超</div></div>
                 <details class="work__more">
                   <summary>課題・施策・結果を見る</summary>
                   <p><b>課題</b>／広告を強化したいが社内に運用人材・ノウハウがなく、改善・拡大の体制がなかった。将来は自社で運用・判断できる状態も必要だった。</p>
@@ -928,6 +1036,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="work__body">
                 <h3>広告費を最適化した高級茶葉のEC</h3>
                 <p>どの広告が効いているかを可視化し、成果の低い広告を整理。予算を増やさず、投資効率だけを引き上げた。</p>
+                <div class="work__chart"><svg viewBox="0 0 300 88" role="img" aria-hidden="true"><text x="4" y="24" fill="#eaf0ff" font-size="11" font-weight="700">広告費</text><rect x="66" y="12" width="220" height="16" rx="2" fill="#2a3a5f"/><text x="290" y="24" fill="#8ea3c8" font-size="10" text-anchor="end">前</text><rect x="66" y="36" width="150" height="16" rx="2" fill="#ff2d95"/><text x="224" y="49" fill="#ff2d95" font-size="12" font-weight="700">−144万</text><text x="4" y="76" fill="#eaf0ff" font-size="11" font-weight="700">獲得単価</text><rect x="66" y="64" width="120" height="14" rx="2" fill="#ff2d95" opacity="0.85"/><text x="194" y="76" fill="#ff2d95" font-size="12" font-weight="700">−20%</text></svg><div class="cap">予算は増やさず<b>広告費 年−144万・獲得単価 −20%</b></div></div>
                 <details class="work__more">
                   <summary>課題・施策・結果を見る</summary>
                   <p><b>課題</b>／複数の広告の費用対効果が可視化されておらず、貢献度の低い広告にも惰性で予算が投下されていた。</p>
@@ -941,6 +1050,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="work__body">
                 <h3>広告を52倍に拡大した事業グロース支援</h3>
                 <p>費用対効果を見ながら広告費を段階的に拡大。利益の出る領域へ投資を集中し、広告を成長のエンジンにした。</p>
+                <div class="work__chart"><svg viewBox="0 0 300 88" role="img" aria-hidden="true"><line x1="6" y1="74" x2="294" y2="74" stroke="#22345f" stroke-width="1.5"/><polyline points="14,71 96,66 172,48 236,26 262,10" fill="none" stroke="#ffb300" stroke-width="3.5"/><circle cx="14" cy="71" r="4" fill="#ffb300"/><circle cx="262" cy="10" r="5" fill="#ffb300"/><text x="10" y="65" fill="#8ea3c8" font-size="11">25万</text><text x="290" y="22" fill="#ffb300" font-size="13" font-weight="700" text-anchor="end">1,300万</text></svg><div class="cap"><b>月25万 → 1,300万円（52倍）</b>／ROAS 400〜660%維持</div></div>
                 <details class="work__more">
                   <summary>課題・施策・結果を見る</summary>
                   <p><b>課題</b>／広告投資を増やしたいが、増額するほど効率は下がりやすい。利益を確保しながらどこまで拡大できるかが課題だった。</p>
@@ -954,6 +1064,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="work__body">
                 <h3>0→1で立ち上げ、2年半でEXITした福利厚生サービス</h3>
                 <p>市場調査からサービス設計、チーム組成・教育、営業、導入後のオンボーディングまで一貫して伴走。提供企業・利用者・自社が“三方よし”になる仕組みをつくり、事業売却（EXIT）まで導いた。</p>
+                <div class="work__chart"><svg viewBox="0 0 300 88" role="img" aria-hidden="true"><line x1="6" y1="74" x2="294" y2="74" stroke="#22345f" stroke-width="1.5"/><polyline points="14,68 110,44 210,26 264,18" fill="none" stroke="#22d3ee" stroke-width="3.5"/><circle cx="110" cy="44" r="4" fill="#22d3ee"/><text x="92" y="40" fill="#8ea3c8" font-size="10">200社</text><path d="M264 6 l3 7 l7 0 l-6 5 l3 8 l-7-5 l-7 5 l3-8 l-6-5 l7 0 z" fill="#c6f542"/><text x="288" y="34" fill="#c6f542" font-size="11" font-weight="700" text-anchor="end">EXIT</text></svg><div class="cap">1年で<b>200社 → 最終300社</b>／約2年半でEXIT</div></div>
                 <details class="work__more">
                   <summary>課題・施策・結果を見る</summary>
                   <p><b>課題</b>／新しい領域で事業を0から立ち上げる必要があり、勝てるサービス設計・運営チーム・販路・導入後の定着まで、すべてを一から構築しなければならなかった。</p>
@@ -967,6 +1078,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="work__body">
                 <h3>全ユーザーの行動分析でCVRを大幅改善した家電量販店EC</h3>
                 <p>広告・流入チャネルからサイト回遊・購入導線までを徹底分析。ECの強み・弱みを洗い出し、必要なコンテンツ追加とページ改善でCVRを引き上げ、売上と広告効率を同時に改善した。</p>
+                <div class="work__chart"><svg viewBox="0 0 300 88" role="img" aria-hidden="true"><text x="4" y="20" fill="#eaf0ff" font-size="11" font-weight="700">CVR</text><rect x="66" y="9" width="70" height="13" rx="2" fill="#2a3a5f"/><rect x="66" y="26" width="158" height="14" rx="2" fill="#c6f542"/><text x="230" y="38" fill="#c6f542" font-size="12" font-weight="700">+150%</text><text x="4" y="66" fill="#eaf0ff" font-size="11" font-weight="700">売上</text><rect x="66" y="56" width="94" height="13" rx="2" fill="#22d3ee"/><text x="166" y="67" fill="#22d3ee" font-size="12" font-weight="700">×1.5</text><text x="212" y="67" fill="#8ea3c8" font-size="10.5">広告費 −20%</text></svg><div class="cap">行動分析で<b>CVR +150%・売上 ×1.5・広告費 −20%</b></div></div>
                 <details class="work__more">
                   <summary>課題・施策・結果を見る</summary>
                   <p><b>課題</b>／ECの成果が伸び悩み、打ち手を見失っていた。どこで離脱し、どうすれば購入に至るのかが可視化できていなかった。</p>
@@ -978,8 +1090,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
           </div>
         </div>
         <div class="container">
-          <div class="glossary reveal">
-            <p class="glossary__label">用語メモ｜かんたん解説</p>
+          <details class="glossary reveal">
+            <summary class="glossary__label">用語メモ｜かんたん解説</summary>
             <dl>
               <div class="glossary__item"><dt>EXIT</dt><dd>育てた事業を売却して利益を得ること（事業売却）</dd></div>
               <div class="glossary__item"><dt>オンボーディング</dt><dd>導入した企業が使いこなせるよう、初期設定や活用を支援すること</dd></div>
@@ -996,7 +1108,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="glossary__item"><dt>反響</dt><dd>広告経由の問い合わせ・申込などの件数</dd></div>
               <div class="glossary__item"><dt>内製化</dt><dd>外注せず、社内で運用できるようにすること</dd></div>
             </dl>
-          </div>
+          </details>
         </div>
       </section>
 
@@ -1046,8 +1158,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
           </div>
         </div>
         <div class="container">
-          <div class="glossary reveal">
-            <p class="glossary__label">用語メモ｜かんたん解説</p>
+          <details class="glossary reveal">
+            <summary class="glossary__label">用語メモ｜かんたん解説</summary>
             <dl>
               <div class="glossary__item"><dt>D2C</dt><dd>メーカーが自社のネットショップで直接お客様に売る売り方</dd></div>
               <div class="glossary__item"><dt>EC</dt><dd>ネット通販（ネットショップ）</dd></div>
@@ -1056,7 +1168,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <div class="glossary__item"><dt>KPI</dt><dd>目標に近づいているか測る中間の数字</dd></div>
               <div class="glossary__item"><dt>定期購入率</dt><dd>定期便を続けて購入してくれるお客様の割合</dd></div>
             </dl>
-          </div>
+          </details>
         </div>
       </section>
 
@@ -1095,14 +1207,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
           </div>
         </div>
         <div class="container">
-          <div class="glossary reveal">
-            <p class="glossary__label">用語メモ｜かんたん解説</p>
+          <details class="glossary reveal">
+            <summary class="glossary__label">用語メモ｜かんたん解説</summary>
             <dl>
               <div class="glossary__item"><dt>P/L</dt><dd>損益計算書。もうけ（利益）の構造を示す表</dd></div>
               <div class="glossary__item"><dt>ノウハウ</dt><dd>仕事の進め方・知識・コツ</dd></div>
               <div class="glossary__item"><dt>0→1</dt><dd>ゼロから新しく事業を立ち上げること</dd></div>
             </dl>
-          </div>
+          </details>
         </div>
       </section>
 
@@ -1125,15 +1237,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
           </div>
         </div>
         <div class="container">
-          <div class="glossary reveal">
-            <p class="glossary__label">用語メモ｜かんたん解説</p>
+          <details class="glossary reveal">
+            <summary class="glossary__label">用語メモ｜かんたん解説</summary>
             <dl>
               <div class="glossary__item"><dt>一気通貫</dt><dd>戦略から現場の実行まで、途切れなく一貫して行うこと</dd></div>
               <div class="glossary__item"><dt>コミット</dt><dd>結果に責任を持って取り組むこと</dd></div>
               <div class="glossary__item"><dt>ONE TEAM</dt><dd>お客様と私たちが、ひとつのチームとして動くこと</dd></div>
               <div class="glossary__item"><dt>PARTNERSHIP</dt><dd>実行まで一緒に走る、対等なパートナー関係</dd></div>
             </dl>
-          </div>
+          </details>
         </div>
       </section>
 

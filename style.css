@@ -505,6 +505,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* 用語メモ（かんたん解説）— マーケ用語をその場で補足 */
 .glossary { margin-top: 28px; border: 1px solid var(--line); border-left: 3px solid var(--acc); background: rgba(12,18,38,.55); padding: 16px 20px; }
 .glossary__label { font-family: "Share Tech Mono", monospace; font-size: 9px; color: var(--acc); letter-spacing: .06em; margin: 0 0 12px; }
+/* 用語メモ：プルダウン（最初だけopen） */
+details.glossary > summary { cursor: pointer; list-style: none; display: flex; align-items: center; margin: 0; }
+details.glossary > summary::-webkit-details-marker { display: none; }
+details.glossary > summary::after { content: "＋ ひらく"; margin-left: auto; color: var(--acc); font-family: "Share Tech Mono", monospace; font-size: 9px; opacity: .85; }
+details.glossary[open] > summary { margin-bottom: 12px; }
+details.glossary[open] > summary::after { content: "− とじる"; }
+details.glossary > summary:hover::after { opacity: 1; text-shadow: 0 0 8px var(--acc-glow, rgba(34,211,238,.6)); }
 .glossary dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px; }
 .glossary__item { font-size: 12.5px; line-height: 1.65; }
 .glossary__item dt { display: inline; font-weight: 700; color: var(--text); }
@@ -649,3 +656,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .logo__img { height: 30px; width: auto; display: block; filter: drop-shadow(0 0 8px rgba(255,255,255,.18)); }
 .footer__brand .logo__img { height: 40px; }
 @media (max-width: 520px) { .logo__img { height: 26px; } }
+
+/* ===== 図・グラフ（インラインSVG・ネオン配色） ===== */
+.figure { margin: 34px auto 0; max-width: 920px; background: rgba(12,18,38,.72); border: 1px solid var(--line); border-radius: 12px; padding: 24px 26px 20px; }
+.figure svg { display: block; width: 100%; height: auto; }
+.figure__cap { font-size: 12.5px; color: var(--muted); margin-top: 14px; text-align: center; line-height: 1.7; }
+.figure__cap b { color: var(--acc); }
+.figure__ttl { font-family: "Share Tech Mono", monospace; font-size: 11px; letter-spacing: .08em; color: var(--acc); margin-bottom: 14px; }
+
+/* 一気通貫フロー */
+.flowfig { margin: 30px auto 0; max-width: 980px; }
+.flowfig svg { display: block; width: 100%; height: auto; }
+
+/* WORKSカード内ミニグラフ */
+.work__chart { margin: 14px 0 2px; padding-top: 13px; border-top: 1px dashed var(--line); }
+.work__chart svg { display: block; width: 100%; height: auto; }
+.work__chart .cap { font-size: 10.5px; color: var(--muted); margin-top: 7px; letter-spacing: .02em; }
+
+@media (max-width: 520px) {
+  .figure { padding: 18px 16px 16px; }
+}
