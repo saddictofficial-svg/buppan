@@ -393,33 +393,32 @@
   }
 })();
 
-/* ===== 実写ムービーFV（加工焼き込み済み動画を背景再生）※PC・スマホ共通 ===== */
+/* ===== 実写ムービーFV（加工焼き込み済み動画を背景再生）※PCのみ。SPは静止画(fv_pixel.jpg) ===== */
 (function () {
   var reduceV = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var video = document.getElementById("fvVideo");
-  var city = document.getElementById("cityCanvas");
-  if (!video || !city || reduceV) return;
-  // スマホでも実写動画に統一。自動再生不可の場合のみドット絵にフォールバック。
+  if (!video || reduceV) return;
+  if (window.innerWidth <= 768) return; // SPは動画を読み込まず静止画のまま（データ節約）
 
   // 9:00〜16:00は昼景、それ以外は夜景。昼素材が無ければ夜景へフォールバック。
   var NIGHT = "assets/mm_fx.mp4", DAY = "assets/mm_day_fx.mp4";
   var h = new Date().getHours();
   var daytime = h >= 9 && h < 16;
-  var srcEl = video.querySelector("source");
   var triedNight = false;
 
-  // 動画は常時表示（背面z:0）。再生できたら前面のドット絵を隠して動画を見せる。
-  function show() { city.style.display = "none"; }
+  // 動画を先に表示（poster=静止画なので黒フラッシュなし）→ 再生。失敗時は静止画へ戻す。
   function load(src) {
-    if (srcEl) srcEl.src = src; else video.src = src;
+    video.src = src;
+    video.style.display = "block"; // 非表示のままだと省電力で再生停止されるため先に表示
     video.load();
     var p = video.play();
-    if (p && p.then) p.then(show).catch(function () {});
+    if (p && p.then) p.then(function () {}).catch(function () {
+      if (!(daytime && !triedNight)) video.style.display = "none"; // 再生不可→静止画のまま
+    });
   }
-  video.addEventListener("playing", show);
-  video.addEventListener("canplay", function () { video.play().then(show).catch(function () {}); });
   video.addEventListener("error", function () {
     if (daytime && !triedNight) { triedNight = true; load(NIGHT); } // 昼素材が未配置→夜景で表示
+    else video.style.display = "none";
   }, true);
   load(daytime ? DAY : NIGHT);
 })();

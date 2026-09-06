@@ -237,7 +237,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== シネマティックFV（カメラの動き＋光のドリフト） ===== */
 /* FVのカメラ演出（ken burns）は無効化：上下の動きなし */
-.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; image-rendering: pixelated; }
+.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; display: none; image-rendering: pixelated; }
 .hero__fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; image-rendering: pixelated; }
 .hero__cine { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(55% 45% at 28% 22%, rgba(34,211,238,.12), transparent 62%); animation: heroCine 16s ease-in-out infinite alternate; }
 @keyframes heroCine { from { opacity: .6; } to { opacity: 1; } }
