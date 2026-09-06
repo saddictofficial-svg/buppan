@@ -98,30 +98,40 @@
   }, { threshold: 0.5 });
   document.querySelectorAll(".stat__num[data-count]").forEach(function (el) { statIO.observe(el); });
 
-  /* ---------- お問い合わせ（デモ） ---------- */
+  /* ---------- お問い合わせ（mailtoで s.kawamura@caddie.co.jp へ送信） ---------- */
   var form = document.getElementById("contactForm");
   if (form) {
+    var CONTACT_MAIL = "s.kawamura@caddie.co.jp";
     form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
       var note = document.getElementById("formNote");
       var consent = document.getElementById("consent");
       if (consent && !consent.checked) {
-        ev.preventDefault();
         note.style.color = "var(--pink)";
         note.textContent = "プライバシーポリシーへの同意が必要です。";
         return;
       }
-      var action = form.getAttribute("action") || "";
-      if (action.indexOf("YOUR_FORM_ID") >= 0 || action === "") {
-        // 送信先が未設定 → デモ表示（本番は action に送信先を設定すると実送信されます）
-        ev.preventDefault();
-        note.style.color = "";
-        note.textContent = "送信ありがとうございます（デモ表示：公開前に送信先の設定が必要です）";
-        form.reset();
-        return;
-      }
-      // 送信先が設定済み → 同意済みなのでそのまま送信
+      function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; }
+      var company = val("f-company"), name = val("f-name"), email = val("f-email"),
+          tel = val("f-tel"), type = val("f-type"), message = val("f-message");
+      var subject = "【BUPPAN】無料相談のお申し込み" + (company ? "（" + company + "）" : "");
+      var body = [
+        "▼ ご相談内容",
+        message,
+        "",
+        "────────────────",
+        "会社名：" + company,
+        "ご担当者名：" + name,
+        "メールアドレス：" + email,
+        "電話番号：" + tel,
+        "ご相談の種別：" + type,
+        "────────────────",
+        "※ BUPPAN LP のお問い合わせフォームから作成されたメールです。"
+      ].join("\r\n");
+      var url = "mailto:" + CONTACT_MAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
       note.style.color = "";
-      note.textContent = "送信中…";
+      note.textContent = "メールソフトを起動しました。開いた画面の内容をご確認のうえ送信してください。（起動しない場合は " + CONTACT_MAIL + " 宛にお送りください）";
+      window.location.href = url;
     });
   }
 

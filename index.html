@@ -648,8 +648,8 @@
               <h2 class="sec-title">まずはお気軽にご相談ください</h2>
               <p class="contact__sub">事業の「面白い」を、一緒に大きくしましょう。</p>
             </div>
-            <!-- 本番化：action に送信先(例: Formspree の https://formspree.io/f/xxxxxx）を設定すると、そのまま送信できます -->
-            <form class="contact__form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <!-- 送信先：s.kawamura@caddie.co.jp（JSで整形メールを作成しmailtoで送信）。フォーム業者で背面送信したい場合はaction差し替え可 -->
+            <form class="contact__form" id="contactForm" action="mailto:s.kawamura@caddie.co.jp" method="post" enctype="text/plain">
               <div class="contact__reassure">
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>相談は無料</span>
                 <span><svg class="ic ic--sm" aria-hidden="true"><use href="#ic-check"/></svg>売り込みはしません</span>
