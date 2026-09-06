@@ -21,3 +21,6 @@ assets/mm.mp4
 
 # 昼の元素材（再加工用・本番はmm_day_fx.mp4）
 assets/mm_day.mp4
+
+# 納品物（サービス資料/パンフレット）はローカル保持
+deliverables/
