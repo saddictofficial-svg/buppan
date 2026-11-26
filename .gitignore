@@ -30,3 +30,6 @@ assets/fv_src.png
 
 # FV静止画（最適化JPG）は配信する
 !assets/fv_pixel.jpg
+
+# リニューアル版で使う画像は保存する
+!renewal/assets/*.jpg
